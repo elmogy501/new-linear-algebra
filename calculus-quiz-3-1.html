@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>كويز درس 3.1 · ELMOGY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f6fa; --card:#ffffff; --ink:#1e293b; --muted:#64748b; --line:#dbe3ec;
+  --slate:#334155; --blue:#1d8fd1; --blue-soft:#e6f3fb; --orange:#ee6a2f; --orange-soft:#fff1ea;
+  --ok:#16a34a; --ok-soft:#e5f6ec; --bad:#dc2626; --bad-soft:#fdeaea; --pi:#c8281f;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f172a; --card:#1b2638; --ink:#e8eef6; --muted:#9aa9bd; --line:#2d3b52;
+    --slate:#0b1220; --blue:#46b0ea; --blue-soft:#14324a; --orange:#ff8650; --orange-soft:#3a2418;
+    --ok:#4ade80; --ok-soft:#12331f; --bad:#f87171; --bad-soft:#3b1717; --pi:#ef5a50;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f172a; --card:#1b2638; --ink:#e8eef6; --muted:#9aa9bd; --line:#2d3b52;
+  --slate:#0b1220; --blue:#46b0ea; --blue-soft:#14324a; --orange:#ff8650; --orange-soft:#3a2418;
+  --ok:#4ade80; --ok-soft:#12331f; --bad:#f87171; --bad-soft:#3b1717; --pi:#ef5a50;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;line-height:1.7;min-height:100vh}
+.wrap{max-width:680px;margin:0 auto;padding:16px 16px 40px}
+header.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 2px 14px;border-bottom:2px solid var(--slate);margin-bottom:18px}
+.logo{display:flex;align-items:center;gap:8px;direction:ltr;font-weight:800;letter-spacing:.18em;font-size:20px}
+.logo .pi{font-family:Georgia,'Times New Roman',serif;font-size:34px;color:var(--pi);line-height:1;font-style:italic;letter-spacing:0}
+.tag{font-size:12px;color:var(--muted);direction:ltr;text-align:left}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+h1{font-size:26px;margin:0 0 6px;line-height:1.3}
+h2{font-size:16px;margin:18px 0 8px}
+p.lead{color:var(--muted);margin:0 0 14px}
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+input[type=text]{width:100%;font:inherit;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+input[type=text]:focus{outline:3px solid var(--blue-soft);border-color:var(--blue)}
+button{font:inherit;cursor:pointer}
+.btn{display:inline-block;border:0;border-radius:10px;padding:11px 26px;font-weight:700;background:var(--orange);color:#fff;margin-top:16px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--slate);border:1.5px solid var(--line)}
+:root[data-theme="dark"] .btn.ghost{color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.ghost{color:var(--ink)}}
+.btn:focus-visible,.opt:focus-visible,.chip:focus-visible,.cnt:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.chips{display:grid;gap:8px}
+.chip{display:flex;align-items:center;gap:10px;width:100%;text-align:right;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--ink)}
+.chip .box{flex:none;width:22px;height:22px;border-radius:6px;border:2px solid var(--line);display:grid;place-items:center;font-size:14px;color:#fff;font-weight:800}
+.chip.on{border-color:var(--blue);background:var(--blue-soft)}
+.chip.on .box{background:var(--blue);border-color:var(--blue)}
+.chip .n{flex:none;font-weight:800;color:var(--blue);direction:ltr;min-width:34px}
+.chip .nm{flex:1;direction:ltr;text-align:left;font-size:15px}
+.chip .c{flex:none;font-size:13px;color:var(--muted)}
+.cnts{display:flex;gap:8px;flex-wrap:wrap}
+.cnt{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:4px 18px;font-weight:700}
+.cnt.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.hint{color:var(--muted);font-size:14px;margin-top:8px}
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.bar{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--blue);border-radius:99px;transition:width .3s}
+.count{font-weight:700;font-size:14px;color:var(--muted);white-space:nowrap}
+.qhead{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.qnum{background:var(--blue);color:#fff;border-radius:10px;padding:2px 12px;font-weight:800}
+.qtype{background:var(--blue-soft);color:var(--blue);border-radius:999px;padding:1px 12px;font-size:13px;font-weight:600}
+.m{font-family:'Cambria Math','STIX Two Math','Times New Roman',serif}
+.qtext{direction:ltr;text-align:left;font-weight:600;font-size:19px;margin:0 0 14px;line-height:1.9;overflow-x:auto}
+.opts{display:grid;gap:10px}
+.opt{direction:ltr;text-align:left;display:flex;align-items:center;gap:12px;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;color:var(--ink);font-size:18px;min-height:46px}
+.opt .l{flex:none;width:28px;height:28px;border-radius:50%;background:var(--slate);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700;font-family:'Cairo',sans-serif}
+.opt .t{overflow-x:auto}
+.opt.sel{border-color:var(--blue);background:var(--blue-soft)}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.ok .l{background:var(--ok)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+.opt.bad .l{background:var(--bad)}
+.opt[disabled]{cursor:default}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px;line-height:1.35}
+.fr i{display:block;font-style:normal;padding:0 3px}
+.fr i:first-child{border-bottom:1.5px solid currentColor}
+.rt .ov{border-top:1.5px solid currentColor;padding:0 2px;margin-left:1px}
+.lim{white-space:nowrap}
+.lim sub{font-size:.7em}
+.pw{display:inline-block;vertical-align:middle;border-left:2px solid currentColor;border-radius:6px 0 0 6px;padding-left:10px;margin-left:4px;text-align:left}
+.pw span{display:block;line-height:1.7}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;border:1.5px solid}
+.fb.ok{border-color:var(--ok);background:var(--ok-soft)}
+.fb.bad{border-color:var(--bad);background:var(--bad-soft)}
+.fb h3{margin:0 0 6px;font-size:17px}
+.expl{font-size:16px}
+.score{text-align:center;padding:10px 0 4px}
+.score .big{font-size:56px;font-weight:800;line-height:1.1;color:var(--orange)}
+.score .of{color:var(--muted);font-weight:600}
+.who{font-weight:700;font-size:18px}
+.lbk{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.lbk li{display:flex;align-items:center;gap:10px;font-size:15px}
+.lbk .n{flex:none;min-width:36px;font-weight:800;color:var(--blue);direction:ltr}
+.lbk .b{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.lbk .b i{display:block;height:100%;background:var(--ok)}
+.lbk .v{flex:none;min-width:48px;text-align:left;direction:ltr;font-weight:700}
+.wrongs{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.wrongs li{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.wrongs .q{direction:ltr;text-align:left;font-size:17px;overflow-x:auto}
+.wrongs .a{font-size:14px;margin-top:6px;color:var(--muted)}
+.wrongs .a b{color:var(--ok)}
+.foot{margin-top:22px;text-align:center;color:var(--muted);font-size:14px}
+.foot b{direction:ltr;unicode-bidi:embed}
+.hide{display:none}
+@media (prefers-reduced-motion: reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <div class="logo"><span class="pi">π</span><span>ELMOGY</span></div>
+    <div class="tag">CALCULUS · THOMAS 14e · 3.1</div>
+  </header>
+
+  <main>
+    <section id="start" class="card">
+      <h1>كويز درس 3.1</h1>
+      <p class="lead" dir="ltr" style="text-align:left">Tangents and the Derivative at a Point</p><p class="lead">الأسئلة بتتوزع عشوائي في كل محاولة، وهتشوف الحل بعد كل سؤال.</p>
+      <label class="fld" for="name">اكتب اسمك</label>
+      <input id="name" type="text" autocomplete="name" placeholder="الاسم بالكامل">
+      <div class="chips" id="chips" style="display:none"></div>
+      <div style="display:none"><div class="cnts" id="cnts"></div></div>
+      <div class="hint" id="hint"></div>
+      <button id="go" class="btn" disabled>ابدأ الكويز</button>
+    </section>
+
+    <section id="quiz" class="hide">
+      <div class="progress"><div class="bar"><i id="barfill"></i></div><div class="count" id="count"></div></div>
+      <div class="card" id="qcard"></div>
+    </section>
+
+    <section id="result" class="card hide"></section>
+  </main>
+
+  <div class="foot">حلول واجبات · ملخصات · تست بنك<br><b>@AElmogy0</b> · <b>002 0109 1795 307</b></div>
+</div>
+
+<script>
+/* ---------- math helpers ---------- */
+var F = function(n,d){ return '<span class="fr"><i>'+n+'</i><i>'+d+'</i></span>'; };
+var R = function(x){ return '<span class="rt">√<span class="ov">'+x+'</span></span>'; };
+var lim = function(a){ return '<span class="lim">lim<sub>'+a+'</sub></span>'; };
+var PW = function(){ var r=[].slice.call(arguments); return '<span class="pw">'+r.map(function(x){return '<span>'+x+'</span>'}).join('')+'</span>'; };
+var X0 = 'x<sub>0</sub>';
+var TF = ['True','False'];
+var q = function(s,t,o,a,e){ return {s:s,t:t,o:o,a:a,e:e}; };
+
+/* ---------- lessons ---------- */
+var LESSONS = [
+  {id:'2.2', name:'Limit of a Function and Limit Laws'},
+  {id:'2.4', name:'One-Sided Limits'},
+  {id:'2.5', name:'Continuity'},
+  {id:'2.6', name:'Limits Involving Infinity; Asymptotes of Graphs'},
+  {id:'3.1', name:'Tangents and the Derivative at a Point'},
+  {id:'3.2', name:'The Derivative as a Function'}
+];
+
+/* ---------- question bank ---------- */
+var BANK = [
+
+/* ===== 2.2 ===== */
+q('2.2', lim('x→4')+' (x<sup>2</sup> − 4x + 1) =', ['1','−1','3','5'], 0, 'عوّض مباشرة: 16 − 16 + 1 = 1'),
+q('2.2', lim('x→2')+' (2x<sup>2</sup> − 4x − 1)<sup>2</sup> =', ['9','1','−1','−11'], 1, 'القوس عند x = 2: 8 − 8 − 1 = −1، وتربيعه = 1'),
+q('2.2', lim('x→−1')+' '+R('x<sup>2</sup> − 8x − 2')+' =', ['does not exist',R('7'),R('6'),R('5')], 1, 'تحت الجذر: 1 + 8 − 2 = 7 ⇒ '+R('7')),
+q('2.2', lim('x→−1')+' (x<sup>2</sup> + 1)(x<sup>3</sup> + 2) =', ['0','6','2','4'], 2, '(1 + 1)(−1 + 2) = 2 · 1 = 2'),
+q('2.2', lim('x→3')+' (x<sup>2</sup> − 4)(2 − x) =', ['5','−5','9','−11'], 1, '(9 − 4)(2 − 3) = 5 · (−1) = −5'),
+q('2.2', lim('x→3')+' '+F('x + 3','x + 6')+' =', ['does not exist','3',F(3,2),F(2,3)], 3, 'المقام مش صفر، عوّض: 6/9 = 2/3'),
+q('2.2', lim('x→1')+' '+F('x<sup>2</sup> − 1','x + 1')+' =', ['does not exist',F('−1',2),F(1,2),'0'], 3, 'المقام مش صفر عند x = 1، عوّض: 0/2 = 0'),
+q('2.2', lim('x→−6')+' '+F('3x + 10','x − 6')+' =', ['does not exist',F('−2',3),F(2,3),F(4,3)], 2, '(−18 + 10)/(−12) = −8/−12 = 2/3'),
+q('2.2', lim('x→1')+' '+F('x<sup>2</sup> − 1','x − 1')+' =', ['2','−2','−1','does not exist'], 0, 'حلّل: (x−1)(x+1)/(x−1) = x + 1 ⇒ 2'),
+q('2.2', lim('x→−1')+' '+F('x + 1','x<sup>2</sup> − 1')+' =', [F(1,2),F('−1',2),'−2','does not exist'], 1, 'اختصر (x+1): 1/(x−1) ⇒ 1/(−2) = −1/2'),
+q('2.2', lim('x→3')+' '+F('x<sup>2</sup> − 6x + 9','x<sup>2</sup> − 9')+' =', ['1','0','−1','does not exist'], 1, '(x−3)² / ((x−3)(x+3)) = (x−3)/(x+3) ⇒ 0/6 = 0'),
+q('2.2', lim('t→1')+' '+F('t<sup>2</sup> − 1','t<sup>2</sup> + 2t − 3')+' =', ['does not exist',F(3,4),F('−1',2),F(1,2)], 3, '(t−1)(t+1) / ((t−1)(t+3)) = (t+1)/(t+3) ⇒ 2/4 = 1/2'),
+q('2.2', lim('x→−1')+' '+F('x<sup>3</sup> + 1','x + 1')+' =', ['1','does not exist','3','2'], 2, 'x³ + 1 = (x+1)(x² − x + 1) ⇒ 1 + 1 + 1 = 3'),
+q('2.2', lim('x→2')+' '+F('x − 2','x<sup>3</sup> − 8')+' =', [F(1,4),'does not exist',F(1,8),F(1,12)], 3, 'x³ − 8 = (x−2)(x² + 2x + 4) ⇒ 1/(4 + 4 + 4) = 1/12'),
+q('2.2', lim('x→−3')+' '+F('x<sup>2</sup> + 5x + 6','x + 3')+' =', ['−1','1','−2','2'], 0, '(x+2)(x+3)/(x+3) = x + 2 ⇒ −1'),
+q('2.2', lim('x→−1')+' '+F('x<sup>2</sup> − 3x − 4','x<sup>2</sup> + 4x + 3')+' =', [F('−3',2),F(3,2),F(5,2),F('−5',2)], 3, '(x−4)(x+1) / ((x+3)(x+1)) = (x−4)/(x+3) ⇒ −5/2'),
+q('2.2', lim('x→−2')+' '+F('x<sup>2</sup> + 2x','x<sup>2</sup> − 4')+' =', [F('−1',2),F(1,2),F(1,4),F('−1',4)], 1, 'x(x+2) / ((x−2)(x+2)) = x/(x−2) ⇒ −2/−4 = 1/2'),
+q('2.2', lim('x→2')+' '+F('x<sup>4</sup> − 16','x<sup>3</sup> − 8')+' =', [F(5,3),F('−5',3),F('−8',3),F(8,3)], 3, '(x²+4)(x+2)(x−2) / ((x−2)(x²+2x+4)) ⇒ (8 · 4)/12 = 8/3'),
+q('2.2', lim('x→9')+' '+F(R('x')+' − 3','x − 9')+' =', [F(1,6),F(1,9),F(1,3),F('−1',6)], 0, 'x − 9 = ('+R('x')+' − 3)('+R('x')+' + 3) ⇒ 1/('+R('x')+' + 3) = 1/6'),
+q('2.2', lim('h→0')+' '+F(R('4 + h')+' − 2','h')+' =', [F('−1',4),F(1,6),F(1,4),F(1,2)], 2, 'اضرب في المرافق: h / (h('+R('4+h')+' + 2)) ⇒ 1/4'),
+q('2.2', lim('x→0')+' '+F('x',R('x + 1')+' − 1')+' =', ['3','0','1','2'], 3, 'اضرب في المرافق ⇒ '+R('x+1')+' + 1 ⇒ 2'),
+q('2.2', 'If '+lim('x→4')+' f(x) = 2 and '+lim('x→4')+' g(x) = −3, then '+lim('x→4')+' '+F('g(x)','f(x) − 1')+' =', ['−3','3','2',F(4,3)], 0, 'قوانين النهايات: −3 / (2 − 1) = −3'),
+q('2.2', 'If '+lim('x→a')+' f(x) = 4 and '+lim('x→a')+' g(x) = −2, then '+lim('x→a')+' (f(x) + g(x)) =', ['8','−2','2','12'], 2, 'نهاية المجموع = مجموع النهايات: 4 + (−2) = 2'),
+q('2.2', 'If '+R('5 − 2x<sup>2</sup>')+' ≤ f(x) ≤ '+R('5 − x<sup>2</sup>')+', then '+lim('x→0')+' f(x) =', ['2',R('5'),'does not exist','0'], 1, 'الطرفين نهايتهم عند 0 هي '+R('5')+'، فبالـ Sandwich Theorem نهاية f = '+R('5')),
+q('2.2', 'If 2 − x<sup>2</sup> ≤ g(x) ≤ 2 cos x, then '+lim('x→0')+' g(x) =', ['2','−2','does not exist','0'], 0, 'الطرفين نهايتهم عند 0 هي 2 ⇒ نهاية g = 2 (Sandwich Theorem)'),
+q('2.2', lim('x→−2')+' |x − 2| =', ['4','−4','8','−8'], 0, 'عوّض: |−2 − 2| = |−4| = 4'),
+
+/* ===== 2.4 ===== */
+q('2.4', lim('x→0<sup>+</sup>')+' '+F('|x|','x')+' =', ['0','−1','1','does not exist'], 2, 'x > 0 ⇒ |x| = x ⇒ النسبة = 1'),
+q('2.4', lim('x→0<sup>−</sup>')+' '+F('|x|','x')+' =', ['0','−1','1','does not exist'], 1, 'x < 0 ⇒ |x| = −x ⇒ النسبة = −1'),
+q('2.4', lim('x→0')+' '+F('|x|','x')+' =', ['0','−1','1','does not exist'], 3, 'النهاية من اليمين (1) ≠ من اليسار (−1) ⇒ النهاية مش موجودة'),
+q('2.4', lim('x→2<sup>+</sup>')+' '+F('|x − 2|','x − 2')+' =', ['does not exist','−1','1','2'], 2, 'x > 2 ⇒ |x − 2| = x − 2 ⇒ 1'),
+q('2.4', lim('x→2<sup>−</sup>')+' '+F('|x − 2|','x − 2')+' =', ['does not exist','−1','1','2'], 1, 'x < 2 ⇒ |x − 2| = −(x − 2) ⇒ −1'),
+q('2.4', lim('x→2')+' '+F('|x − 2|','x − 2')+' =', ['does not exist','−1','1','2'], 0, 'اليمين 1 واليسار −1 ⇒ النهاية مش موجودة'),
+q('2.4', 'If f(x) = '+PW('1 + x, &nbsp; x &gt; 3','2x − 2, &nbsp; x ≤ 3')+', then '+lim('x→3')+' f(x) =', ['4','−4','does not exist','3'], 0, 'اليمين: 1 + 3 = 4، اليسار: 2(3) − 2 = 4. متساويين ⇒ النهاية 4'),
+q('2.4', 'If f(x) = '+PW('2x + 3, &nbsp; x ≤ −2','2x + 5, &nbsp; x &gt; −2')+', then '+lim('x→−2<sup>−</sup>')+' f(x) =', ['1','3','does not exist','−1'], 3, 'من اليسار نستخدم 2x + 3: −4 + 3 = −1'),
+q('2.4', 'If f(x) = '+PW('2x + 3, &nbsp; x ≤ −2','2x + 5, &nbsp; x &gt; −2')+', then '+lim('x→−2<sup>+</sup>')+' f(x) =', ['1','3','does not exist','−1'], 0, 'من اليمين نستخدم 2x + 5: −4 + 5 = 1'),
+q('2.4', 'If f(x) = '+PW('2x + 3, &nbsp; x ≤ −2','2x + 5, &nbsp; x &gt; −2')+', then '+lim('x→−2')+' f(x) =', ['1','3','does not exist','−1'], 2, 'اليسار −1 واليمين 1 ⇒ النهاية مش موجودة'),
+q('2.4', 'If f(x) = '+PW('x − 1, &nbsp; x ≤ −1','x<sup>2</sup> + 1, &nbsp; −1 &lt; x ≤ 0','(x + π)<sup>2</sup>, &nbsp; x &gt; 0')+', then '+lim('x→−1<sup>−</sup>')+' f(x) =', ['1','−2','2','π<sup>2</sup>'], 1, 'من اليسار: x − 1 ⇒ −1 − 1 = −2'),
+q('2.4', 'If f(x) = '+PW('x − 1, &nbsp; x ≤ −1','x<sup>2</sup> + 1, &nbsp; −1 &lt; x ≤ 0','(x + π)<sup>2</sup>, &nbsp; x &gt; 0')+', then '+lim('x→−1<sup>+</sup>')+' f(x) =', ['1','−2','2','π<sup>2</sup>'], 2, 'من اليمين: x² + 1 ⇒ 1 + 1 = 2'),
+q('2.4', 'If f(x) = '+PW('x − 1, &nbsp; x ≤ −1','x<sup>2</sup> + 1, &nbsp; −1 &lt; x ≤ 0','(x + π)<sup>2</sup>, &nbsp; x &gt; 0')+', then '+lim('x→0<sup>−</sup>')+' f(x) =', ['1','−2','2','π<sup>2</sup>'], 0, 'من اليسار: x² + 1 ⇒ 1'),
+q('2.4', 'If f(x) = '+PW('x − 1, &nbsp; x ≤ −1','x<sup>2</sup> + 1, &nbsp; −1 &lt; x ≤ 0','(x + π)<sup>2</sup>, &nbsp; x &gt; 0')+', then '+lim('x→0<sup>+</sup>')+' f(x) =', ['1','−2','2','π<sup>2</sup>'], 3, 'من اليمين: (x + π)² ⇒ π²'),
+q('2.4', 'If f(x) = '+PW('5x<sup>2</sup> + 1, &nbsp; x ≥ −2','x<sup>2</sup> + 17, &nbsp; x &lt; −2')+', then '+lim('x→0')+' f(x) =', ['17','1','2','−17'], 1, 'حوالين x = 0 الدالة هي 5x² + 1 ⇒ 1'),
+q('2.4', 'If f(x) = '+PW('5x<sup>2</sup> + 1, &nbsp; x ≥ −2','x<sup>2</sup> + 17, &nbsp; x &lt; −2')+', then '+lim('x→1')+' f(x) =', ['17','6','2','5'], 1, 'حوالين x = 1 الدالة هي 5x² + 1 ⇒ 5 + 1 = 6'),
+q('2.4', lim('x→1<sup>+</sup>')+' (3⌊x⌋ − 8) =', ['11','5','−8','−5'], 3, 'من اليمين ⌊x⌋ = 1 ⇒ 3 − 8 = −5'),
+q('2.4', lim('x→1<sup>−</sup>')+' (3⌊x⌋ − 8) =', ['11','5','−8','−5'], 2, 'من اليسار ⌊x⌋ = 0 ⇒ 0 − 8 = −8'),
+q('2.4', lim('x→0')+' '+F('sin x','x')+' =', ['−1','1','0','does not exist'], 1, 'نهاية أساسية: sin x / x → 1'),
+q('2.4', lim('x→0')+' '+F('tan x','x')+' =', ['−1','1','0','does not exist'], 1, 'tan x / x = (sin x / x) · (1 / cos x) ⇒ 1 · 1 = 1'),
+q('2.4', lim('x→0')+' '+F('sin 2x','5x')+' =', [F(2,5),F('−2',5),'0','does not exist'], 0, '(sin 2x / 2x) · (2/5) ⇒ 1 · 2/5 = 2/5'),
+q('2.4', lim('x→0')+' '+F('tan 2x','5x')+' =', [F(2,5),F('−2',5),'0','does not exist'], 0, '(tan 2x / 2x) · (2/5) ⇒ 2/5'),
+q('2.4', lim('x→3')+' ⌊x⌋ =', ['3','does not exist','2','1'], 1, 'من اليمين 3 ومن اليسار 2 ⇒ النهاية مش موجودة'),
+q('2.4', lim('x→3<sup>+</sup>')+' ⌊x⌋ =', ['3','does not exist','2','1'], 0, 'x أكبر من 3 بشوية ⇒ ⌊x⌋ = 3'),
+q('2.4', lim('x→3<sup>−</sup>')+' ⌊x⌋ =', ['3','does not exist','2','1'], 2, 'x أقل من 3 بشوية ⇒ ⌊x⌋ = 2'),
+
+/* ===== 2.5 ===== */
+q('2.5', 'The function f(x) = '+PW(F('x<sup>2</sup> − 1','x − 1')+', &nbsp; x ≠ 1','4, &nbsp; x = 1')+' is', ['continuous at x = 1','discontinuous at x = 1'], 1, 'النهاية = lim (x + 1) = 2 لكن f(1) = 4 ⇒ مش متصلة'),
+q('2.5', 'The function f(x) = '+PW(F('x + 1','x<sup>2</sup> − 1')+', &nbsp; x ≠ −1',F('−1',2)+', &nbsp; x = −1')+' is', ['continuous at x = −1','discontinuous at x = −1'], 0, 'النهاية = 1/(x − 1) → −1/2 وهي نفس f(−1) ⇒ متصلة'),
+q('2.5', 'The function f(x) = '+PW('2x + 3, &nbsp; x &gt; 2','5 + x, &nbsp; x ≤ 2')+' is', ['left continuous at x = 2 only','continuous at x = 2','right continuous at x = 2 only','neither left continuous nor right continuous at x = 2'], 1, 'f(2) = 7، من اليسار 7، ومن اليمين 2(2) + 3 = 7 ⇒ متصلة'),
+q('2.5', 'The function f(x) = '+PW('x + 2, &nbsp; x ≤ 1','6 − x, &nbsp; x &gt; 1')+' is', ['left continuous at x = 1 only','continuous at x = 1','right continuous at x = 1 only','neither left continuous nor right continuous at x = 1'], 0, 'f(1) = 3 ومن اليسار 3 ✓، لكن من اليمين 6 − 1 = 5 ✗ ⇒ left only'),
+q('2.5', 'The function f(x) = '+PW('x + 2, &nbsp; x &lt; 1','6 − x, &nbsp; x ≥ 1')+' is', ['left continuous at x = 1 only','continuous at x = 1','right continuous at x = 1 only','neither left continuous nor right continuous at x = 1'], 2, 'f(1) = 5 ومن اليمين 5 ✓، لكن من اليسار 3 ✗ ⇒ right only'),
+q('2.5', 'The function f(x) = ⌊x⌋ is', ['left continuous at x = 1 only','continuous at x = 1','right continuous at x = 1 only','neither left continuous nor right continuous at x = 1'], 2, 'f(1) = 1 ومن اليمين 1 ✓، لكن من اليسار 0 ✗ ⇒ right only'),
+q('2.5', 'The function f(x) = '+F('x − 1','x<sup>2</sup> − 16')+' is continuous on', ['ℝ − {4}','ℝ − {−4, 4}','ℝ − {−4}','ℝ'], 1, 'المقام = 0 عند x = ±4'),
+q('2.5', 'The function f(x) = '+R('x')+' is continuous on', ['[0, ∞)','ℝ','ℝ − {0}','(0, ∞)'], 0, 'الجذر التربيعي معرّف ومتصل على [0, ∞)'),
+q('2.5', 'The function f(x) = <sup>3</sup>'+R('x')+' is continuous on', ['[0, ∞)','ℝ','ℝ − {0}','(0, ∞)'], 1, 'الجذر التكعيبي معرّف ومتصل على كل الأعداد'),
+q('2.5', 'The function f(x) = cos x is continuous on', ['[−1, ∞)','ℝ','ℝ − {0}','(−1, 1)'], 1, 'cos x متصلة على ℝ'),
+q('2.5', 'The function f(x) = sin x is continuous on', ['[−1, ∞)','ℝ','ℝ − {0}','(−1, 1)'], 1, 'sin x متصلة على ℝ'),
+q('2.5', 'The function f(x) = '+F('x<sup>2</sup> − x − 2','x − 2')+' is continuous on', ['ℝ − {−2}','ℝ','ℝ − {2}','(−2, 2)'], 2, 'الدالة مش معرّفة عند x = 2 بس'),
+q('2.5', 'The function f(x) = '+F('sin x','x<sup>2</sup> − 3x + 2')+' is continuous on', ['ℝ − {1, 2}','ℝ − {−1, 2}','ℝ − {1, −2}','ℝ − {−1, −2}'], 0, 'x² − 3x + 2 = (x − 1)(x − 2) ⇒ المقام = 0 عند 1 و 2'),
+q('2.5', 'The function f(x) = '+R('2x + 3')+' is continuous on', ['(−∞, '+F('−3',2)+']','('+F('−3',2)+', ∞)','['+F('−3',2)+', ∞)','['+F(3,2)+', ∞)'], 2, '2x + 3 ≥ 0 ⇒ x ≥ −3/2'),
+q('2.5', 'The function f(x) = '+F('x',R('x − 1'))+' is continuous on', ['[1, ∞)','(1, ∞)','[0, ∞)','ℝ'], 1, 'الجذر في المقام ⇒ لازم x − 1 > 0 ⇒ x > 1'),
+q('2.5', 'The continuous extension of f(x) = '+F('x<sup>2</sup> − 4','x − 2')+' at x = 2 is', ['F(x) = x + 2','F(x) = x − 2','F(x) = 4','F(x) = 2x'], 0, '(x−2)(x+2)/(x−2) = x + 2'),
+q('2.5', 'The continuous extension of f(t) = '+F('1 − t<sup>3</sup>','1 − t')+' at t = 1 is', ['F(t) = t<sup>2</sup> + t + 1','F(t) = t<sup>2</sup> − t + 1','F(t) = 1 − t<sup>2</sup> + t','F(t) = −3t<sup>2</sup>'], 0, '1 − t³ = (1 − t)(1 + t + t²) ⇒ t² + t + 1'),
+q('2.5', 'The value of k that makes f(x) = '+PW('x<sup>2</sup>, &nbsp; x ≤ 2','k − x<sup>2</sup>, &nbsp; x &gt; 2')+' continuous at x = 2 is', ['8','4','2','1'], 0, 'اليسار: 2² = 4. اليمين: k − 4. نساويهم: k − 4 = 4 ⇒ k = 8'),
+q('2.5', 'The value of m that makes f(x) = '+PW('x − m, &nbsp; x &lt; 3','1 − mx, &nbsp; x ≥ 3')+' continuous at x = 3 is', ['1','−1','−2','2'], 1, '3 − m = 1 − 3m ⇒ 2m = −2 ⇒ m = −1'),
+
+/* ===== 2.6 ===== */
+q('2.6', lim('x→∞')+' 5 =', ['5','∞','0','−∞'], 0, 'الثابت نهايته نفسه = 5'),
+q('2.6', lim('x→∞')+' '+F(1,'x')+' =', ['1','∞','0','−∞'], 2, 'لما x تكبر، 1/x بتقرب من 0'),
+q('2.6', lim('x→∞')+' '+F('5x<sup>2</sup> + 8x − 3','3x<sup>2</sup> + 2')+' =', [F(5,3),'∞','0','−∞'], 0, 'نفس الدرجة ⇒ النهاية = النسبة بين معاملات أكبر أس = 5/3'),
+q('2.6', lim('x→∞')+' '+F('x','2x − 3')+' =', [F('−1',3),'∞','0',F(1,2)], 3, 'نفس الدرجة ⇒ 1/2'),
+q('2.6', lim('x→∞')+' '+F('3x<sup>3</sup> − 5x<sup>2</sup> + 7','8 + 2x − 5x<sup>3</sup>')+' =', [F('−3',5),F(3,5),'∞','0'], 0, 'نفس الدرجة ⇒ 3/(−5) = −3/5'),
+q('2.6', lim('x→−∞')+' '+F('x<sup>2</sup> − 2','x − x<sup>2</sup>')+' =', ['−∞','−1','0','1'], 1, 'نفس الدرجة ⇒ 1/(−1) = −1'),
+q('2.6', lim('x→∞')+' '+F('x + 1','2x<sup>2</sup> + 6x + 5')+' =', [F(1,2),'2','∞','0'], 3, 'درجة البسط أقل من درجة المقام ⇒ 0'),
+q('2.6', lim('x→3')+' '+F(1,'3 − x')+' =', ['does not exist','−∞','∞','0'], 0, 'من اليمين −∞ ومن اليسار +∞ ⇒ النهاية مش موجودة'),
+q('2.6', lim('x→3<sup>+</sup>')+' '+F(1,'3 − x')+' =', ['does not exist','−∞','∞','0'], 1, 'x > 3 ⇒ (3 − x) سالب صغير ⇒ −∞'),
+q('2.6', lim('x→3<sup>−</sup>')+' '+F(1,'3 − x')+' =', ['does not exist','−∞','∞','0'], 2, 'x < 3 ⇒ (3 − x) موجب صغير ⇒ +∞'),
+q('2.6', lim('x→2')+' '+F('x','x − 2')+' =', ['−∞','does not exist','0','∞'], 1, 'البسط → 2، والمقام بيغيّر إشارته: اليمين +∞ واليسار −∞ ⇒ مش موجودة'),
+q('2.6', lim('x→2<sup>+</sup>')+' '+F('x','x − 2')+' =', ['−∞','does not exist','0','∞'], 3, 'البسط موجب والمقام موجب صغير ⇒ +∞'),
+q('2.6', lim('x→2<sup>−</sup>')+' '+F('x','x − 2')+' =', ['−∞','does not exist','0','∞'], 0, 'البسط موجب والمقام سالب صغير ⇒ −∞'),
+q('2.6', lim('x→3')+' '+F('x − 4','x<sup>2</sup> − 9')+' =', ['0','∞','−∞','does not exist'], 3, 'البسط → −1. اليمين −∞ واليسار +∞ ⇒ النهاية مش موجودة'),
+q('2.6', lim('x→3<sup>−</sup>')+' '+F('x − 4','x<sup>2</sup> − 9')+' =', ['0','∞','−∞','does not exist'], 1, 'البسط سالب والمقام سالب صغير (x² − 9 &lt; 0) ⇒ موجب ⇒ +∞'),
+q('2.6', lim('x→3<sup>+</sup>')+' '+F('x − 4','x<sup>2</sup> − 9')+' =', ['0','∞','−∞','does not exist'], 2, 'البسط سالب والمقام موجب صغير ⇒ −∞'),
+q('2.6', lim('x→2')+' '+F('x − 3','x<sup>2</sup> − 4x + 4')+' =', ['0','∞','−∞','does not exist'], 2, 'المقام = (x − 2)² موجب دايمًا، والبسط → −1 ⇒ −∞ من الناحيتين'),
+q('2.6', 'The horizontal asymptote of the graph of y = '+F(1,'x')+' is', ['y = 0','y = 1','x = 0','x = 1'], 0, 'lim 1/x = 0 لما x → ±∞ ⇒ y = 0'),
+q('2.6', 'The horizontal asymptote of the graph of y = '+F('x + 3','x + 2')+' is', ['y = 0','y = 1','x = 0','x = 1'], 1, 'نفس الدرجة: النهاية = 1 ⇒ y = 1'),
+q('2.6', 'The vertical asymptote of the graph of y = '+F(1,'x')+' is', ['y = 0','y = 1','x = 0','x = 1'], 2, 'المقام = 0 عند x = 0'),
+q('2.6', 'The vertical asymptote of the graph of y = '+F('x + 3','x + 2')+' is', ['y = 0','y = 1','x = 2','x = −2'], 3, 'المقام = 0 عند x = −2 والبسط مش صفر هناك'),
+
+/* ===== 3.1 ===== */
+q('3.1', 'The slope of the curve y = f(x) at ('+X0+', y<sub>0</sub>) is', [
+  lim('h→0')+' '+F('f('+X0+' + h) − f('+X0+')','h'),
+  lim('h→0')+' '+F('f('+X0+' + h) + f('+X0+')','h'),
+  lim('h→0')+' '+F('f('+X0+' − h) + f('+X0+')','h'),
+  lim('h→0')+' '+F('f('+X0+' − h) − f('+X0+')','h')], 0, 'تعريف الميل: lim [f(x₀ + h) − f(x₀)] / h'),
+q('3.1', 'The tangent line to the curve y = 3x − 1 at the point (1, 2) is', ['y = 3x + 1','y = −3x − 1','y = −3x + 1','y = 3x − 1'], 3, 'الخط مستقيم ميله 3 ⇒ مماسه هو الخط نفسه'),
+q('3.1', 'The normal line to the curve y = 3x − 1 at the point (1, 2) is', ['y = '+F('−1',3)+'x + '+F(7,3),'y = '+F('−1',3)+'x − '+F(7,3),'y = '+F(1,3)+'x + '+F(7,3),'y = '+F(1,3)+'x − '+F(7,3)], 0, 'ميل المماس 3 ⇒ ميل العمودي −1/3: y − 2 = −(1/3)(x − 1)'),
+q('3.1', 'The normal line to the curve y = 2x<sup>2</sup> − 5 at the point (2, 3) is', ['y = '+F('−1',8)+'x + '+F(13,4),'y = '+F('−1',8)+'x − '+F(13,4),'y = '+F(1,8)+'x + '+F(13,4),'y = '+F(1,8)+'x − '+F(13,4)], 0, 'من التعريف f′(x) = 4x ⇒ ميل المماس عند x = 2 هو 8 ⇒ ميل العمودي −1/8: y − 3 = −(1/8)(x − 2)'),
+q('3.1', 'The tangent line to the curve y = 2x<sup>2</sup> − 5 at the point (2, 3) is', ['y = 8x + 13','y = 8x − 13','y = −8x + 13','y = −8x − 13'], 1, 'الميل 8: y − 3 = 8(x − 2) ⇒ y = 8x − 13'),
+q('3.1', 'The tangent line to the curve y = x<sup>2</sup> + 2 at the point (1, 3) is', ['y = 2x − 5','y = −2x + 5','y = 2x + 1','y = 2x − 1'], 2, 'الميل 2: y − 3 = 2(x − 1) ⇒ y = 2x + 1'),
+q('3.1', 'The normal line to the curve y = x<sup>2</sup> + 2 at the point (1, 3) is', ['y = '+F('−1',2)+'x + '+F(7,2),'y = '+F(1,2)+'x + '+F(7,2),'y = '+F('−1',2)+'x + '+F(5,2),'y = '+F(1,2)+'x + '+F(5,2)], 0, 'ميل المماس 2 ⇒ ميل العمودي −1/2: y − 3 = −(1/2)(x − 1) ⇒ y = −x/2 + 7/2'),
+q('3.1', 'The tangent line to the curve y = x<sup>2</sup> at the point (1, 1) is', ['y = 2x − 1','y = 2x + 1','y = 2x − 3','y = 2x + 3'], 0, 'الميل 2: y − 1 = 2(x − 1) ⇒ y = 2x − 1'),
+q('3.1', 'The tangent line to the curve y = x<sup>2</sup> at the point (2, 4) is', ['y = 4x − 4','y = 4x + 4','y = 4x − 12','y = 4x + 12'], 0, 'الميل 4: y − 4 = 4(x − 2) ⇒ y = 4x − 4'),
+q('3.1', 'The slope of the line y = 3 is 0.', TF, 0, 'الخط الأفقي ميله صفر'),
+
+/* ===== 3.2 ===== */
+q('3.2', 'The derivative of y = f(x) by using the definition is', [
+  lim('h→0')+' '+F('f(x + h) − f(x)','h'),
+  lim('h→0')+' '+F('f(x + h) + f(x)','h'),
+  lim('h→0')+' '+F('f(x − h) + f(x)','h'),
+  lim('h→0')+' '+F('f(x − h) − f(x)','h')], 0, 'f′(x) = lim [f(x + h) − f(x)] / h'),
+q('3.2', 'The derivative of f(x) = '+R('x')+' by using the definition is', [
+  lim('h→0')+' '+F(R('x − h')+' + '+R('x'),'h'),
+  lim('h→0')+' '+F(R('x − h')+' − '+R('x'),'h'),
+  lim('h→0')+' '+F(R('x + h')+' − '+R('x'),'h'),
+  lim('h→0')+' '+F(R('x + h')+' + '+R('x'),'h')], 2, 'نعوّض f(x + h) − f(x) في التعريف'),
+q('3.2', 'The derivative of f(x) = x<sup>2</sup> by using the definition is', [
+  lim('h→0')+' '+F('(x + h)<sup>2</sup> − x<sup>2</sup>','h'),
+  lim('h→0')+' '+F('(x + h)<sup>2</sup> + x<sup>2</sup>','h'),
+  lim('h→0')+' '+F('(x − h)<sup>2</sup> − x<sup>2</sup>','h'),
+  lim('h→0')+' '+F('(x − h)<sup>2</sup> + x<sup>2</sup>','h')], 0, 'نعوّض f(x + h) = (x + h)² في التعريف'),
+q('3.2', 'If f has a derivative at c, then f is continuous at c.', TF, 0, 'القابلية للاشتقاق عند نقطة تستلزم الاتصال عندها (والعكس مش صحيح)'),
+q('3.2', 'A continuous curve y = f(x) has a vertical tangent line where x = '+X0+' if '+lim('h→0')+' '+F('f('+X0+' + h) − f('+X0+')','h')+' =', ['∞ or −∞','0','D.N.E','x<sub>0</sub>'], 0, 'المماس الرأسي ميله لا نهائي'),
+q('3.2', 'A continuous curve y = f(x) has a horizontal tangent line where x = '+X0+' if '+lim('h→0')+' '+F('f('+X0+' + h) − f('+X0+')','h')+' =', ['∞ or −∞','0','D.N.E','x<sub>0</sub>'], 1, 'المماس الأفقي ميله صفر'),
+q('3.2', 'A continuous curve y = f(x) has no tangent line where x = '+X0+' if '+lim('h→0')+' '+F('f('+X0+' + h) − f('+X0+')','h')+' =', ['∞ or −∞','0','D.N.E','x<sub>0</sub>'], 2, 'لو النهاية مش موجودة (زي الـ corner أو الـ cusp) ⇒ مفيش مماس'),
+q('3.2', 'The function U(x) = '+PW('0, &nbsp; x &lt; 0','1, &nbsp; x ≥ 0')+' has a vertical tangent line at the point (0, 1).', TF, 1, 'الدالة مش متصلة عند x = 0 (قفزة)، والمماس الرأسي بيحتاج دالة متصلة ⇒ False')
+
+];
+
+/* ---------- state & helpers ---------- */
+var L = ['a','b','c','d'];
+var CNTS = [10,20,30,0];
+var st = {name:'', sel:{}, want:null, set:[], i:0, picked:[], pick:null, done:false};
+BANK = BANK.filter(function(x){ return x.s==='3.1'; });
+LESSONS = LESSONS.filter(function(l){ return l.id==='3.1'; });
+LESSONS.forEach(function(l){ st.sel[l.id] = true; });
+CNTS = [];
+st.want = 0;
+
+function $(id){ return document.getElementById(id); }
+function show(id){ ['start','quiz','result'].forEach(function(s){ $(s).classList.toggle('hide', s!==id); }); window.scrollTo(0,0); }
+function shuffle(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function pool(){ return BANK.filter(function(x){ return st.sel[x.s]; }); }
+function countIn(id){ return BANK.filter(function(x){ return x.s===id; }).length; }
+
+/* ---------- start screen ---------- */
+function drawStart(){
+  $('chips').innerHTML = LESSONS.map(function(l){
+    return '<button class="chip'+(st.sel[l.id]?' on':'')+'" data-id="'+l.id+'" role="checkbox" aria-checked="'+(!!st.sel[l.id])+'">' +
+      '<span class="box">'+(st.sel[l.id]?'✓':'')+'</span><span class="n">'+l.id+'</span><span class="nm">'+l.name+'</span><span class="c">'+countIn(l.id)+' سؤال</span></button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.chip'), function(b){
+    b.addEventListener('click', function(){ st.sel[b.dataset.id] = !st.sel[b.dataset.id]; drawStart(); });
+  });
+  var n = pool().length;
+  $('cnts').innerHTML = CNTS.map(function(c){
+    return '<button class="cnt'+(st.want===c?' on':'')+'" data-c="'+c+'">'+(c===0?'كل الأسئلة':c)+'</button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.cnt'), function(b){
+    b.addEventListener('click', function(){ st.want = +b.dataset.c; drawStart(); });
+  });
+  var msg;
+  if(!n) msg = 'اختار درس واحد على الأقل';
+  else if(st.want===null) msg = 'اختار عدد الأسئلة (متاح ' + n + ' سؤال في الدروس اللي اخترتها)';
+  else { var take = st.want===0 ? n : Math.min(st.want, n); msg = 'هتجاوب على ' + take + ' سؤال من ' + n + ' متاحين'; }
+  $('hint').textContent = msg;
+  $('go').disabled = !(n>0 && st.want!==null && $('name').value.trim().length>=2);
+}
+$('name').addEventListener('input', drawStart);
+$('name').addEventListener('keydown', function(e){ if(e.key==='Enter' && !$('go').disabled) $('go').click(); });
+$('go').addEventListener('click', function(){
+  var p = shuffle(pool());
+  var take = st.want===0 ? p.length : Math.min(st.want, p.length);
+  st.name = $('name').value.trim();
+  st.set = p.slice(0, take); st.i = 0; st.picked = [];
+  show('quiz'); render();
+});
+
+/* ---------- quiz ---------- */
+function render(){
+  var qq = st.set[st.i], n = st.set.length;
+  $('count').textContent = (st.i+1) + ' / ' + n;
+  $('barfill').style.width = (st.i/n*100) + '%';
+  var h = '<div class="qhead"><span class="qnum">'+(st.i+1)+'</span><span class="qtype">درس '+qq.s+'</span></div>' +
+    '<p class="qtext m">'+qq.t+'</p><div class="opts" role="radiogroup">';
+  qq.o.forEach(function(o,k){
+    h += '<button class="opt" data-k="'+k+'" role="radio" aria-checked="false"><span class="l">'+L[k]+'</span><span class="t m">'+o+'</span></button>';
+  });
+  h += '</div><div id="fb"></div><div id="act"><button class="btn" id="confirm" disabled>تأكيد الإجابة</button></div>';
+  $('qcard').innerHTML = h;
+  st.pick = null; st.done = false;
+  Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      if(st.done) return;
+      st.pick = +b.dataset.k;
+      Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(x){
+        var on = (x===b); x.classList.toggle('sel', on); x.setAttribute('aria-checked', on);
+      });
+      $('confirm').disabled = false;
+    });
+  });
+  $('confirm').addEventListener('click', confirmAns);
+}
+
+function confirmAns(){
+  var qq = st.set[st.i]; if(st.pick===null) return;
+  st.done = true; st.picked[st.i] = st.pick;
+  var right = st.pick === qq.a;
+  Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(b){
+    var k = +b.dataset.k; b.disabled = true; b.classList.remove('sel');
+    if(k===qq.a) b.classList.add('ok'); else if(k===st.pick) b.classList.add('bad');
+  });
+  $('fb').innerHTML = '<div class="fb '+(right?'ok':'bad')+'"><h3>'+(right?'إجابة صحيحة ✓':'إجابة غلط. الصح هو ('+L[qq.a]+')')+'</h3><div class="expl m">'+qq.e+'</div></div>';
+  var last = st.i === st.set.length-1;
+  $('act').innerHTML = '<button class="btn" id="next">'+(last?'شوف النتيجة':'السؤال اللي بعده')+'</button>';
+  $('next').addEventListener('click', function(){ if(last) finish(); else { st.i++; render(); window.scrollTo(0,0); } });
+  $('next').focus();
+}
+
+/* ---------- result ---------- */
+function finish(){
+  var n = st.set.length, score = 0, per = {};
+  st.set.forEach(function(x,i){
+    per[x.s] = per[x.s] || {c:0,t:0}; per[x.s].t++;
+    if(st.picked[i]===x.a){ score++; per[x.s].c++; }
+  });
+  var pct = Math.round(score/n*100);
+  var msg = pct===100 ? 'ممتاز، كل الإجابات صح!' : pct>=70 ? 'شغل حلو، راجع الأسئلة اللي غلطت فيها.' : pct>=50 ? 'مستواك كويس بس محتاج مراجعة.' : 'راجع الدروس وحاول تاني.';
+  var h = '<div class="score"><div class="who"></div><div class="big">'+score+'<span class="of"> / '+n+'</span></div><div>'+pct+'% · '+msg+'</div></div>';
+  h += '<h2>النتيجة حسب الدرس</h2><ul class="lbk">';
+  LESSONS.forEach(function(l){
+    var p = per[l.id]; if(!p) return;
+    h += '<li><span class="n">'+l.id+'</span><span class="b"><i style="width:'+Math.round(p.c/p.t*100)+'%"></i></span><span class="v">'+p.c+' / '+p.t+'</span></li>';
+  });
+  h += '</ul>';
+  var wr = [];
+  st.set.forEach(function(x,i){ if(st.picked[i]!==x.a) wr.push(i); });
+  if(wr.length){
+    h += '<h2>الأسئلة اللي غلطت فيها</h2><ul class="wrongs">';
+    wr.forEach(function(i){
+      var x = st.set[i];
+      h += '<li><div class="q m">'+(i+1)+'. '+x.t+'</div><div class="a">إجابتك: ('+L[st.picked[i]]+') · الصح: <b>('+L[x.a]+')</b></div></li>';
+    });
+    h += '</ul>';
+  }
+  h += '<div style="text-align:center"><button class="btn ghost" id="again">محاولة جديدة</button></div>';
+  $('result').innerHTML = h;
+  $('result').querySelector('.who').textContent = st.name;
+  $('barfill').style.width = '100%';
+  $('again').addEventListener('click', function(){ show('start'); drawStart(); });
+  show('result');
+}
+
+drawStart();
+</script>
+</body>
+</html>
