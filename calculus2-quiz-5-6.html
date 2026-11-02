@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>كويز 5 · تفاضل وتكامل 2 · ELMOGY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#f3f6fa; --card:#ffffff; --ink:#1e293b; --muted:#64748b; --line:#dbe3ec;
+  --slate:#334155; --blue:#1d8fd1; --blue-soft:#e6f3fb; --orange:#ee6a2f; --orange-soft:#fff1ea;
+  --ok:#16a34a; --ok-soft:#e5f6ec; --bad:#dc2626; --bad-soft:#fdeaea; --pi:#c8281f;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f172a; --card:#1b2638; --ink:#e8eef6; --muted:#9aa9bd; --line:#2d3b52;
+    --slate:#0b1220; --blue:#46b0ea; --blue-soft:#14324a; --orange:#ff8650; --orange-soft:#3a2418;
+    --ok:#4ade80; --ok-soft:#12331f; --bad:#f87171; --bad-soft:#3b1717; --pi:#ef5a50;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f172a; --card:#1b2638; --ink:#e8eef6; --muted:#9aa9bd; --line:#2d3b52;
+  --slate:#0b1220; --blue:#46b0ea; --blue-soft:#14324a; --orange:#ff8650; --orange-soft:#3a2418;
+  --ok:#4ade80; --ok-soft:#12331f; --bad:#f87171; --bad-soft:#3b1717; --pi:#ef5a50;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;line-height:1.7;min-height:100vh}
+.wrap{max-width:680px;margin:0 auto;padding:16px 16px 40px}
+header.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 2px 14px;border-bottom:2px solid var(--slate);margin-bottom:18px}
+.logo{display:flex;align-items:center;gap:8px;direction:ltr;font-weight:800;letter-spacing:.18em;font-size:20px}
+.logo .pi{font-family:Georgia,'Times New Roman',serif;font-size:34px;color:var(--pi);line-height:1;font-style:italic;letter-spacing:0}
+.tag{font-size:12px;color:var(--muted);direction:ltr;text-align:left}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+h1{font-size:26px;margin:0 0 6px;line-height:1.3}
+p.lead{color:var(--muted);margin:0 0 18px}
+.facts{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 20px;padding:0;list-style:none}
+.facts li{background:var(--blue-soft);color:var(--blue);border-radius:999px;padding:3px 14px;font-size:14px;font-weight:600}
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+input[type=text]{width:100%;font:inherit;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+input[type=text]:focus{outline:3px solid var(--blue-soft);border-color:var(--blue)}
+button{font:inherit;cursor:pointer}
+.btn{display:inline-block;border:0;border-radius:10px;padding:11px 26px;font-weight:700;background:var(--orange);color:#fff;margin-top:16px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--slate);border:1.5px solid var(--line)}
+:root[data-theme="dark"] .btn.ghost{color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.ghost{color:var(--ink)}}
+.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.bar{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--blue);border-radius:99px;transition:width .3s}
+.count{font-weight:700;font-size:14px;color:var(--muted);white-space:nowrap}
+.qhead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.qnum{background:var(--blue);color:#fff;border-radius:10px;padding:2px 12px;font-weight:800}
+.qtype{background:var(--blue-soft);color:var(--blue);border-radius:999px;padding:1px 12px;font-size:13px;font-weight:600}
+.qtext{direction:ltr;text-align:left;font-weight:700;font-size:18px;margin:0 0 14px;line-height:1.6}
+.given{direction:ltr;background:var(--slate);color:#fff;border-radius:10px;padding:12px 16px;margin-bottom:14px;font-family:'Cambria Math','Times New Roman',serif;font-size:18px;text-align:center;overflow-x:auto}
+.given .mx{display:inline-block;vertical-align:middle;border-left:2px solid #fff;border-right:2px solid #fff;border-radius:6px;padding:2px 10px}
+.given .mx table{border-collapse:collapse}
+.given .mx td{padding:1px 10px;text-align:center}
+.given .sys{display:inline-block;text-align:left;border-left:2px solid #fff;padding-left:10px}
+.opts{display:grid;gap:10px}
+.opt{direction:ltr;text-align:left;display:flex;align-items:center;gap:12px;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--ink);font-size:16px}
+.opt .l{flex:none;width:28px;height:28px;border-radius:50%;background:var(--slate);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.opt .t{font-family:'Cambria Math','Times New Roman',serif;font-size:18px}
+.opt.sel{border-color:var(--blue);background:var(--blue-soft)}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.ok .l{background:var(--ok)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+.opt.bad .l{background:var(--bad)}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;border:1.5px solid}
+.fb.ok{border-color:var(--ok);background:var(--ok-soft)}
+.fb.bad{border-color:var(--bad);background:var(--bad-soft)}
+.fb h3{margin:0 0 6px;font-size:17px}
+.steps{direction:ltr;text-align:left;margin:8px 0 0;padding:0;list-style:none;font-family:'Cambria Math','Times New Roman',serif;font-size:17px}
+.steps li{padding:4px 0;border-top:1px dashed var(--line)}
+.steps li:first-child{border-top:0}
+.note{margin-top:10px;background:var(--orange-soft);border-right:4px solid var(--orange);border-radius:6px;padding:8px 12px;font-size:15px}
+.score{text-align:center;padding:10px 0 4px}
+.score .big{font-size:56px;font-weight:800;line-height:1.1;color:var(--orange)}
+.score .of{color:var(--muted);font-weight:600}
+.who{font-weight:700;font-size:18px}
+.review{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:8px}
+.review li{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:15px}
+.review .m{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px}
+.review .m.ok{background:var(--ok)}.review .m.bad{background:var(--bad)}
+.review .q{direction:ltr;text-align:left;flex:1}
+.review small{display:block;color:var(--muted)}
+.foot{margin-top:22px;text-align:center;color:var(--muted);font-size:14px}
+.foot b{direction:ltr;unicode-bidi:embed}
+.katex{font-size:1.1em}
+.given .katex-display{margin:.15em 0}
+.given .katex-display>.katex{text-align:center}
+.katex-display{overflow-x:auto;overflow-y:hidden}
+.hide{display:none}
+@media (prefers-reduced-motion: reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <div class="logo"><span class="pi">π</span><span>ELMOGY</span></div>
+    <div class="tag">CALCULUS 2 · QUIZ 5</div>
+  </header>
+
+  <main>
+    <section id="start" class="card">
+      <h1>كويز 5 · تفاضل وتكامل 2</h1>
+      <p class="lead">Section 5.6 · Definite Integral Substitutions and Area Between Curves. اختار الإجابة الصحيحة، وهتشوف الحل بعد كل سؤال.</p>
+      <ul class="facts"><li>10 أسئلة</li><li>اختيار من متعدد</li><li>الحل بعد كل سؤال</li></ul>
+      <label class="fld" for="name">اكتب اسمك</label>
+      <input id="name" type="text" autocomplete="name" placeholder="الاسم بالكامل">
+      <button id="go" class="btn" disabled>ابدأ الكويز</button>
+    </section>
+
+    <section id="quiz" class="hide">
+      <div class="progress"><div class="bar"><i id="barfill"></i></div><div class="count" id="count"></div></div>
+      <div class="card" id="qcard"></div>
+    </section>
+
+    <section id="result" class="card hide"></section>
+  </main>
+
+  <div class="foot">حلول واجبات · ملخصات · تست بنك<br><b>@AElmogy0</b> · <b>002 0109 1795 307</b></div>
+</div>
+
+<script>
+var Q = [
+{
+  tag:'تغيير النهايات',
+  rv:'$\\int_{0}^{\\pi}3\\cos^{2}x\\sin x\\,dx=\\int_{0}^{\\pi}(-3u^{2})\\,du$',
+  text:'Let $u=\\cos x$. Is the following statement true or false?',
+  given:'$$\\int_{0}^{\\pi}3\\cos^{2}x\\,\\sin x\\,dx=\\int_{0}^{\\pi}\\left(-3u^{2}\\right)du$$',
+  opts:['True','False'], ans:1,
+  steps:['$u=\\cos x\\ \\Rightarrow\\ du=-\\sin x\\,dx$','The limits must change too: $x=0\\Rightarrow u=1$, &nbsp; $x=\\pi\\Rightarrow u=-1$','Correct: $\\displaystyle\\int_{1}^{-1}\\left(-3u^{2}\\right)du=\\int_{-1}^{1}3u^{2}\\,du=\\Big[u^{3}\\Big]_{-1}^{1}=2$','The statement keeps the old limits: $\\displaystyle\\int_{0}^{\\pi}(-3u^{2})\\,du=-\\pi^{3}\\neq 2$'],
+  note:'في التكامل المحدد، بعد ما تعمل substitution لازم تحوّل النهايات للمتغير الجديد: $u(0)=1$ و $u(\\pi)=-1$.'
+},
+{
+  tag:'شروط نظرية التعويض',
+  rv:'Conditions of the substitution theorem',
+  text:'The substitution theorem for definite integrals states that $\\displaystyle\\int_{a}^{b}f(g(x))\\,g^{\\prime}(x)\\,dx=\\int_{g(a)}^{g(b)}f(u)\\,du$. Which conditions are required?',
+  given:'$$\\int_{a}^{b}f\\big(g(x)\\big)\\,g^{\\prime}(x)\\,dx=\\int_{g(a)}^{g(b)}f(u)\\,du$$',
+  opts:['$f^{\\prime}$ is continuous on $[a,b]$, and $g(a)<g(b)$','$g$ is increasing on $[a,b]$, and $f$ is even','$g^{\\prime}$ is continuous on $[a,b]$, and $f$ is continuous on the range of $g$','$g(a)=g(b)$, and $f$ is continuous'], ans:2,
+  steps:['The theorem requires $g^{\\prime}$ continuous on $[a,b]$','and $f$ continuous on the range of $g$ (the values $u=g(x)$ takes)','No condition like $g(a)<g(b)$: the new limits may even be reversed','No parity condition on $f$, and $g$ need not be increasing'],
+  note:'مفيش شرط إن $g(a)<g(b)$. النهايات الجديدة ممكن تبقى معكوسة وده عادي.'
+},
+{
+  tag:'إشارتين وعكس نهايات',
+  rv:'$\\int_{\\pi/4}^{\\pi/2}\\cot\\theta\\,\\csc^{2}\\theta\\,d\\theta$',
+  text:'Find the value of the definite integral below.',
+  given:'$$\\int_{\\pi/4}^{\\pi/2}\\cot\\theta\\,\\csc^{2}\\theta\\,d\\theta$$',
+  opts:['$\\displaystyle-\\frac{1}{2}$','$1$','$\\displaystyle\\frac{1}{2}$','$0$'], ans:2,
+  steps:['$u=\\cot\\theta\\ \\Rightarrow\\ du=-\\csc^{2}\\theta\\,d\\theta$','$\\theta=\\dfrac{\\pi}{4}\\Rightarrow u=1$, &nbsp; $\\theta=\\dfrac{\\pi}{2}\\Rightarrow u=0$','$\\displaystyle\\int_{1}^{0}u\\,(-du)=\\int_{0}^{1}u\\,du$','$=\\dfrac{1}{2}$'],
+  note:'فيه سالبين: السالب من $du$ والنهايات معكوسة (من 1 إلى 0). هما بيلغوا بعض والناتج موجب.'
+},
+{
+  tag:'الرجوع لـ x',
+  rv:'$\\left[\\frac{2}{3}(x+1)^{3/2}\\right]_{0}^{3}=\\int_{1}^{4}\\sqrt{u}\\,du$',
+  text:'Let $u=x+1$ in $\\displaystyle\\int_{0}^{3}\\sqrt{x+1}\\,dx$. Is the following statement true or false?',
+  given:'$$\\left[\\frac{2}{3}(x+1)^{3/2}\\right]_{x=0}^{x=3}\\;=\\;\\int_{1}^{4}\\sqrt{u}\\,du$$',
+  opts:['True','False'], ans:0,
+  steps:['Method 1 (change the limits): $x=0\\Rightarrow u=1$, $x=3\\Rightarrow u=4$, so $\\displaystyle\\int_{1}^{4}\\sqrt{u}\\,du=\\frac{2}{3}\\left(4^{3/2}-1\\right)=\\frac{14}{3}$','Method 2 (go back to $x$): $F(x)=\\dfrac{2}{3}(x+1)^{3/2}$ and $F(3)-F(0)=\\dfrac{2}{3}(8)-\\dfrac{2}{3}(1)=\\dfrac{14}{3}$','Both methods give the same value, so the statement is true'],
+  note:'الطريقتين صح. بس لو رجعت لـ $x$ استخدم نهايات $x$، ولو فضلت في $u$ استخدم نهايات $u$. ماتخلطش بينهم.'
+},
+{
+  tag:'معامل وتحويل نهايات',
+  rv:'$\\int_{0}^{\\pi/4}\\cos 2x\\,dx$ with $u=2x$',
+  text:'Using $u=2x$, which expression equals the integral below?',
+  given:'$$\\int_{0}^{\\pi/4}\\cos 2x\\,dx$$',
+  opts:['$\\displaystyle\\int_{0}^{\\pi/2}\\cos u\\,du$','$\\displaystyle\\frac{1}{2}\\int_{0}^{\\pi/2}\\cos u\\,du$','$\\displaystyle2\\int_{0}^{\\pi/2}\\cos u\\,du$','$\\displaystyle\\frac{1}{2}\\int_{0}^{\\pi/4}\\cos u\\,du$'], ans:1,
+  steps:['$u=2x\\ \\Rightarrow\\ du=2\\,dx\\ \\Rightarrow\\ dx=\\dfrac{du}{2}$','$x=0\\Rightarrow u=0$, &nbsp; $x=\\dfrac{\\pi}{4}\\Rightarrow u=\\dfrac{\\pi}{2}$','$\\displaystyle\\int_{0}^{\\pi/4}\\cos 2x\\,dx=\\frac{1}{2}\\int_{0}^{\\pi/2}\\cos u\\,du=\\frac{1}{2}$'],
+  note:'التحويل بيشمل التلات حاجات مع بعض: الدالة، والمعامل $\\frac{1}{2}$ من $dx=\\frac{du}{2}$، والنهايات الجديدة.'
+},
+{
+  tag:'قاعدة الفردي والزوجي',
+  rv:'Rules for $\\int_{-a}^{a}f(x)\\,dx$',
+  text:'Which pair of statements about $\\displaystyle\\int_{-a}^{a}f(x)\\,dx$ is correct?',
+  given:'$$\\int_{-a}^{a}f(x)\\,dx$$',
+  opts:['If $f$ is odd, the integral equals $2\\displaystyle\\int_{0}^{a}f$. If $f$ is even, it equals $0$.','If $f$ is odd, the integral equals $0$. If $f$ is even, it equals $2\\displaystyle\\int_{0}^{a}f$.','If $f$ is odd, the integral equals $0$. If $f$ is even, it equals $\\displaystyle\\int_{0}^{a}f$.','For both odd and even $f$, the integral equals $2\\displaystyle\\int_{0}^{a}f$.'], ans:1,
+  steps:['Odd: $f(-x)=-f(x)$, so the parts over $[-a,0]$ and $[0,a]$ cancel: integral $=0$','Even: $f(-x)=f(x)$, so the two halves are equal: integral $=2\\displaystyle\\int_{0}^{a}f$','Check: $f=x$ gives $\\displaystyle\\int_{-1}^{1}x\\,dx=0$, and $f=x^{2}$ gives $\\dfrac{2}{3}=2\\cdot\\dfrac{1}{3}$'],
+  note:'الفردية بتلغي نفسها (صفر)، والزوجية بتتضاعف.'
+},
+{
+  tag:'تماثل حاصل الضرب',
+  rv:'Which integral over $[-1,1]$ equals $0$?',
+  text:'Which of the following integrals equals $0$ without computing it?',
+  given:'$$\\text{even}\\times\\text{even}=\\text{even},\\quad \\text{odd}\\times\\text{odd}=\\text{even},\\quad \\text{even}\\times\\text{odd}=\\text{odd}$$',
+  opts:['$\\displaystyle\\int_{-1}^{1}x^{3}\\sin x\\,dx$','$\\displaystyle\\int_{-1}^{1}x^{2}\\cos x\\,dx$','$\\displaystyle\\int_{-1}^{1}x^{4}\\sin x\\,dx$','$\\displaystyle\\int_{-1}^{1}\\cos x\\,dx$'], ans:2,
+  steps:['$x^{3}\\sin x$: odd $\\times$ odd $=$ even $\\Rightarrow$ integral $=2\\displaystyle\\int_{0}^{1}x^{3}\\sin x\\,dx>0$','$x^{2}\\cos x$ and $\\cos x$ are even, and positive on $[-1,1]$, so their integrals are not $0$','$x^{4}\\sin x$: even $\\times$ odd $=$ odd $\\Rightarrow$ integral over $[-1,1]$ is $0$'],
+  note:'اضرب الزوجية في الفردية يطلع فردية. وحاصل ضرب فردية في فردية بيطلع زوجية (مش صفر).'
+},
+{
+  tag:'التعرف على du',
+  rv:'$\\int_{0}^{1}(4y-y^{2}+4y^{3}+1)^{-3}(12y^{2}-2y+4)\\,dy$',
+  text:'Find the value of the definite integral below.',
+  given:'$$\\int_{0}^{1}\\left(4y-y^{2}+4y^{3}+1\\right)^{-3}\\left(12y^{2}-2y+4\\right)dy$$',
+  opts:['$\\displaystyle\\frac{63}{64}$','$\\displaystyle-\\frac{63}{128}$','$\\displaystyle\\frac{63}{128}$','$\\displaystyle\\frac{127}{128}$'], ans:2,
+  steps:['$u=4y-y^{2}+4y^{3}+1\\ \\Rightarrow\\ du=\\left(4-2y+12y^{2}\\right)dy$, exactly the second factor','$y=0\\Rightarrow u=1$, &nbsp; $y=1\\Rightarrow u=4-1+4+1=8$','$\\displaystyle\\int_{1}^{8}u^{-3}\\,du=\\Big[-\\dfrac{1}{2u^{2}}\\Big]_{1}^{8}=-\\dfrac{1}{128}+\\dfrac{1}{2}$','$=\\dfrac{63}{128}$'],
+  note:'مش لازم تفك أي حاجة: المشتقة ظاهرة بالظبط جنب القوس. المهم تعوّض في النهايات صح (1 و 8).'
+},
+{
+  tag:'جذر ونهايات جديدة',
+  rv:'$\\int_{-1}^{1}3x^{2}\\sqrt{x^{3}+1}\\,dx$',
+  text:'Find the value of the definite integral below.',
+  given:'$$\\int_{-1}^{1}3x^{2}\\sqrt{x^{3}+1}\\,dx$$',
+  opts:['$\\displaystyle\\frac{2}{3}\\sqrt{2}$','$\\displaystyle\\frac{4}{3}\\sqrt{2}$','$4\\sqrt{2}$','$\\displaystyle\\frac{8}{3}\\sqrt{2}$'], ans:1,
+  steps:['$u=x^{3}+1\\ \\Rightarrow\\ du=3x^{2}\\,dx$','$x=-1\\Rightarrow u=0$, &nbsp; $x=1\\Rightarrow u=2$','$\\displaystyle\\int_{0}^{2}\\sqrt{u}\\,du=\\Big[\\frac{2}{3}u^{3/2}\\Big]_{0}^{2}=\\frac{2}{3}\\cdot 2^{3/2}$','$2^{3/2}=2\\sqrt{2}\\ \\Rightarrow\\ \\dfrac{4}{3}\\sqrt{2}$'],
+  note:'الغلطة الشائعة إنك تعتبر $2^{3/2}=\\sqrt{2}$. الصح $2^{3/2}=2\\sqrt{2}$.'
+},
+{
+  tag:'قاعدة المساحة',
+  rv:'$g\\ge f$ on $[-2,1]$, $f\\ge g$ on $[1,3]$ — total area',
+  text:'Suppose $g(x)\\ge f(x)$ on $[-2,1]$ and $f(x)\\ge g(x)$ on $[1,3]$ (the curves cross at $x=1$). The total area between the curves over $[-2,3]$ is:',
+  given:'$$g\\ge f\\ \\text{ on }[-2,1],\\qquad f\\ge g\\ \\text{ on }[1,3]$$',
+  opts:['$\\displaystyle\\int_{-2}^{3}\\left[f(x)-g(x)\\right]dx$','$\\displaystyle\\int_{-2}^{3}\\left[g(x)-f(x)\\right]dx$','$\\displaystyle\\int_{-2}^{1}\\left[f(x)-g(x)\\right]dx+\\int_{1}^{3}\\left[g(x)-f(x)\\right]dx$','$\\displaystyle\\int_{-2}^{1}\\left[g(x)-f(x)\\right]dx+\\int_{1}^{3}\\left[f(x)-g(x)\\right]dx$'], ans:3,
+  steps:['Area $=\\displaystyle\\int(\\text{top}-\\text{bottom})\\,dx$ on each piece','On $[-2,1]$ the top curve is $g$: $\\ \\displaystyle\\int_{-2}^{1}[g-f]\\,dx$','On $[1,3]$ the top curve is $f$: $\\ \\displaystyle\\int_{1}^{3}[f-g]\\,dx$','Add the two pieces (choice (d))'],
+  note:'تكامل واحد على كل الفترة بيخلي الجزء الموجب والسالب يلغوا بعض، فلازم تقسم عند نقطة التقاطع $x=1$.'
+}
+];
+var L = ['a','b','c','d'];
+var st = {name:'', i:0, picked:[], done:false};
+
+function $(id){return document.getElementById(id)}
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});
+  }
+}
+function show(id){['start','quiz','result'].forEach(function(s){$(s).classList.toggle('hide', s!==id)}); window.scrollTo(0,0);}
+function stripTags(h){var d=document.createElement('div');d.innerHTML=h;return d.textContent}
+
+$('name').addEventListener('input', function(){ $('go').disabled = this.value.trim().length < 2; });
+$('name').addEventListener('keydown', function(e){ if(e.key==='Enter' && !$('go').disabled) $('go').click(); });
+$('go').addEventListener('click', function(){
+  st = {name:$('name').value.trim(), i:0, picked:[], done:false};
+  show('quiz'); render();
+});
+
+function render(){
+  var q = Q[st.i], n = Q.length;
+  $('count').textContent = (st.i+1) + ' / ' + n;
+  $('barfill').style.width = (st.i/n*100) + '%';
+  var h = '<div class="qhead"><span class="qnum">' + (st.i+1) + '</span><span class="qtype">' + q.tag + '</span></div>' +
+    '<p class="qtext">' + q.text + '</p><div class="given">' + q.given + '</div><div class="opts" role="radiogroup">';
+  q.opts.forEach(function(o,k){
+    h += '<button class="opt" data-k="'+k+'" role="radio" aria-checked="false"><span class="l">'+L[k]+'</span><span class="t">'+o+'</span></button>';
+  });
+  h += '</div><div id="fb"></div><div id="act"><button class="btn" id="confirm" disabled>تأكيد الإجابة</button></div>';
+  $('qcard').innerHTML = h; typeset($('qcard'));
+  st.sel = null; st.done = false;
+  Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      if(st.done) return;
+      st.sel = +b.dataset.k;
+      Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(x){
+        var on = (x===b); x.classList.toggle('sel', on); x.setAttribute('aria-checked', on);
+      });
+      $('confirm').disabled = false;
+    });
+  });
+  $('confirm').addEventListener('click', confirmAns);
+}
+
+function confirmAns(){
+  var q = Q[st.i]; if(st.sel===null) return;
+  st.done = true; st.picked[st.i] = st.sel;
+  var right = st.sel === q.ans;
+  Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(b){
+    var k = +b.dataset.k; b.disabled = true; b.classList.remove('sel');
+    if(k===q.ans) b.classList.add('ok'); else if(k===st.sel) b.classList.add('bad');
+  });
+  var fb = '<div class="fb ' + (right?'ok':'bad') + '"><h3>' + (right ? 'إجابة صحيحة ✓' : 'إجابة غلط. الصح هو (' + L[q.ans] + ')') + '</h3>' +
+    '<ul class="steps">' + q.steps.map(function(s){return '<li>'+s+'</li>'}).join('') + '</ul>' +
+    (q.note ? '<div class="note"><b>انتبه:</b> ' + q.note + '</div>' : '') + '</div>';
+  $('fb').innerHTML = fb; typeset($('fb'));
+  var last = st.i === Q.length-1;
+  $('act').innerHTML = '<button class="btn" id="next">' + (last ? 'شوف النتيجة' : 'السؤال اللي بعده') + '</button>';
+  $('next').addEventListener('click', function(){
+    if(last) finish(); else { st.i++; render(); window.scrollTo(0,0); }
+  });
+  $('next').focus();
+}
+
+function finish(){
+  var score = 0; Q.forEach(function(q,i){ if(st.picked[i]===q.ans) score++; });
+  var pct = Math.round(score/Q.length*100);
+  var msg = pct===100 ? 'ممتاز، كل الإجابات صح!' : pct>=70 ? 'شغل حلو، راجع الأسئلة اللي غلطت فيها.' : pct>=50 ? 'مستواك كويس بس محتاج مراجعة.' : 'راجع ورقة القواعد وحاول تاني.';
+  var h = '<div class="score"><div class="who"></div><div class="big">' + score + '<span class="of"> / ' + Q.length + '</span></div><div>' + pct + '% · ' + msg + '</div></div><ul class="review">';
+  Q.forEach(function(q,i){
+    var ok = st.picked[i]===q.ans;
+    h += '<li><span class="m ' + (ok?'ok':'bad') + '">' + (ok?'✓':'✗') + '</span><div class="q">' + (i+1) + '. ' + q.rv +
+      '<small>' + (ok ? 'إجابتك: (' + L[q.ans] + ') ' + q.opts[q.ans] : 'إجابتك: (' + L[st.picked[i]] + ') ' + q.opts[st.picked[i]] + ' · الصح: (' + L[q.ans] + ') ' + q.opts[q.ans]) + '</small></div></li>';
+  });
+  h += '</ul><div style="text-align:center"><button class="btn ghost" id="again">حاول من الأول</button></div>';
+  $('result').innerHTML = h; typeset($('result'));
+  $('result').querySelector('.who').textContent = st.name;
+  $('barfill').style.width = '100%';
+  $('again').addEventListener('click', function(){ show('start'); });
+  show('result');
+}
+</script>
+</body>
+</html>
