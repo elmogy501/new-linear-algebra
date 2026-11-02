@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculus 3 – Quiz 2 Review</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1d2433;--mute:#667085;--line:#d9deea;--acc:#2f4bd1;--ok:#14804a;--okbg:#e3f6ea;--no:#b42318;--nobg:#fde8e6}
+@media (prefers-color-scheme:dark){:root{--bg:#12151d;--card:#1b2030;--ink:#e8ebf4;--mute:#97a0b8;--line:#2f3650;--acc:#8ea2ff;--ok:#5fd19a;--okbg:#14301f;--no:#ff9b91;--nobg:#3a1815}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Times New Roman",serif;padding:16px;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+h1{font-size:22px;margin:4px 0 2px}
+.sub{color:var(--mute);font-size:14px;margin:0 0 14px;font-family:system-ui,sans-serif}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;background:var(--acc);width:0;transition:width .25s}
+.meta{display:flex;justify-content:space-between;color:var(--mute);font:13px system-ui,sans-serif;margin-bottom:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.sec{font:600 13px system-ui,sans-serif;color:var(--acc);margin-bottom:8px}
+.q{font-size:19px;margin:0 0 14px}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:9px;font:inherit;cursor:pointer}
+.opt:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.opt b{display:inline-block;width:24px;color:var(--acc)}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}
+.opt.no{border-color:var(--no);background:var(--nobg)}
+.opt:disabled{cursor:default;color:var(--ink)}
+.exp{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--bg);font-size:15.5px;display:none}
+.exp.show{display:block}
+.btn{margin-top:14px;width:100%;padding:13px;border:0;border-radius:10px;background:var(--acc);color:#fff;font:600 16px system-ui,sans-serif;cursor:pointer;display:none}
+@media (prefers-color-scheme:dark){.btn{color:#12151d}}
+.btn.show{display:block}
+.score{font-size:42px;margin:6px 0;text-align:center}
+.msg{text-align:center;font-family:system-ui,sans-serif;margin-bottom:14px}
+.rev{border-top:1px solid var(--line);padding:10px 0;font-size:15px}
+.rev small{color:var(--mute);font-family:system-ui,sans-serif}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Calculus 3 — Quiz 2 Review</h1>
+  <p class="sub">Vector functions · T, N, B · Curvature · Lines & planes</p>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="meta"><span id="pos"></span><span id="sc"></span></div>
+  <div class="card" id="card"></div>
+</div>
+<script>
+const TF=["True","False"];
+const Q=[
+// ---- True / False
+{s:"True or False",q:"The unit tangent vector T(t) = r⃗(t) / |r⃗(t)|.",o:TF,a:1,e:"T(t) = r⃗′(t) / |r⃗′(t)| — we divide the <b>velocity</b> by its length, not the position vector."},
+{s:"True or False",q:"The binormal vector B(t) is perpendicular to both T(t) and N(t).",o:TF,a:0,e:"B = T × N, and a cross product is perpendicular to both of its factors."},
+{s:"True or False",q:"If r⃗(t) is differentiable and |r⃗(t)| is constant, then r⃗(t) · dr⃗/dt = 0.",o:TF,a:0,e:"|r⃗|² = constant, so d/dt (r⃗·r⃗) = 2 r⃗·r⃗′ = 0."},
+{s:"True or False",q:"Parametric equations of the line through P(1, 2, −1) and Q(−1, 0, 1) are x = 1 − 2t, y = 2 − 2t, z = −1 + 2t.",o:TF,a:0,e:"v = PQ = ⟨−2, −2, 2⟩ and the point is P(1, 2, −1), so x = 1 − 2t, y = 2 − 2t, z = −1 + 2t."},
+{s:"True or False",q:"lim<sub>t→1</sub> ( ln(2 − t) î + √(t + 8) ĵ − 3k̂ ) = î + 3ĵ − 3k̂.",o:TF,a:1,e:"ln(2 − 1) = ln 1 = 0, so the limit is 0î + 3ĵ − 3k̂ (the î component is 0, not 1)."},
+{s:"True or False",q:"∫ (−2î + t²ĵ) dt = −2t î + (1/3)t³ ĵ + C.",o:TF,a:0,e:"Integrate each component: ∫−2 dt = −2t and ∫t² dt = t³/3."},
+{s:"True or False",q:"For r⃗(t) = x(t)î + y(t)ĵ + z(t)k̂, a ≤ t ≤ b, the arc length is L = ∫<sub>a</sub><sup>b</sup> |r⃗′(t)| dt.",o:TF,a:0,e:"Arc length = integral of the speed |v⃗| = |r⃗′(t)|."},
+{s:"True or False",q:"Every plane in space can be written as Ax + By + Cz = D.",o:TF,a:0,e:"Any plane has a normal vector ⟨A, B, C⟩ and passes through a point, which gives Ax + By + Cz = D."},
+{s:"True or False",q:"If r⃗(t) = cos 2t î + sin 2t ĵ, then |v⃗| = 4.",o:TF,a:1,e:"v⃗ = ⟨−2 sin 2t, 2 cos 2t⟩, so |v⃗| = √(4 sin²2t + 4 cos²2t) = 2."},
+{s:"True or False",q:"If v⃗(t) = t cos t î + t sin t ĵ, then a<sub>T</sub> = t.",o:TF,a:1,e:"|v⃗| = √(t²cos²t + t²sin²t) = t, and a<sub>T</sub> = d|v⃗|/dt = 1."},
+// ---- Multiple choice
+{s:"Choose the correct answer",q:"The normal component of acceleration a<sub>N</sub> =",o:["√(|a|² + a<sub>T</sub>²)","|a|² − a<sub>T</sub>²","√(|a|² − a<sub>T</sub>²)","√(|a|² + a<sub>T</sub>)"],a:2,e:"a = a<sub>T</sub>T + a<sub>N</sub>N, so |a|² = a<sub>T</sub>² + a<sub>N</sub>² and a<sub>N</sub> = √(|a|² − a<sub>T</sub>²)."},
+{s:"Choose the correct answer",q:"If r⃗(t) = ⟨√t, 2 − t, −4⟩, then r⃗′(1) =",o:["⟨1/2, 1, 0⟩","⟨1/2, −1, 0⟩","(1/2)î − ĵ + k̂","⟨1/2, 1⟩"],a:1,e:"r⃗′(t) = ⟨1/(2√t), −1, 0⟩, so r⃗′(1) = ⟨1/2, −1, 0⟩."},
+{s:"Choose the correct answer",q:"The distance from a point S to a line through P parallel to v⃗ is:",o:["d = |PS⃗ · v⃗| / |v⃗|","d = |PS⃗ × v⃗| / |v⃗|","d = (PS⃗ · v⃗) / |v⃗|","d = (PS⃗ × v⃗) / |v⃗|"],a:1,e:"The cross product's length gives the parallelogram area; dividing by the base |v⃗| gives the height = distance. It must have absolute value (length)."},
+{s:"Choose the correct answer",q:"If r⃗(t) = ⟨2 + t, −(t + 1), t⟩, then ∫<sub>0</sub><sup>3</sup> |v⃗| dt =",o:["√3","0","3","3√3"],a:3,e:"v⃗ = ⟨1, −1, 1⟩, |v⃗| = √3 (constant), so the integral = 3√3."},
+{s:"Choose the correct answer",q:"If r⃗(t) = ⟨e<sup>−t</sup>, (1/3)t³, sin 2t⟩, then r⃗′(t) at t = 0 is:",o:["⟨−1, 0, 2⟩","⟨1, 0, 1⟩","⟨1, 0, 2⟩","⟨1, 1, 2⟩"],a:0,e:"r⃗′ = ⟨−e<sup>−t</sup>, t², 2 cos 2t⟩ → at t = 0: ⟨−1, 0, 2⟩."},
+{s:"Choose the correct answer",q:"If r⃗(t) is a smooth curve, the curvature κ is the scalar function:",o:["−(1/|r⃗|)|dT/dt|","(1/|r⃗|)|dT/dt|","(1/|v⃗|)|dT/dt|","−(1/|v⃗|)|dT/dt|"],a:2,e:"κ = |dT/ds| = |dT/dt| / (ds/dt) = (1/|v⃗|)|dT/dt|. Curvature is never negative."},
+{s:"Choose the correct answer",q:"The angle between the planes x + y + z = 1 and x − y + z = 1 is:",o:["cos<sup>−1</sup>(1/3)","cos<sup>−1</sup>(2/3)","cos<sup>−1</sup>(2/5)","−cos<sup>−1</sup>(1/3)"],a:0,e:"n₁ = ⟨1,1,1⟩, n₂ = ⟨1,−1,1⟩. n₁·n₂ = 1, |n₁||n₂| = √3·√3 = 3, so θ = cos<sup>−1</sup>(1/3)."},
+{s:"Choose the correct answer",q:"d/dt [ u(t) × v(t) ] =",o:["u′ × v − u × v′","u′ · v + u · v′","u′ · v − u · v′","u′ × v + u × v′"],a:3,e:"The product rule for the cross product keeps the order and uses a plus sign: u′ × v + u × v′."},
+{s:"Choose the correct answer",q:"Solve the IVP: dr⃗/dt = −t î − t ĵ − t k̂, r⃗(0) = î + 2ĵ + 3k̂.",o:["(−t²/2 + 1)î + (−t²/2 − 2)ĵ + (−t²/2 + 3)k̂","(−t²/2 + 1)î + (t²/2 + 1)ĵ + (−t²/2 + 3)k̂","(−t²/2 + 1)î + (−t²/2 − 1)ĵ + (−t²/2 − 3)k̂","(−t²/2 + 1)î + (−t²/2 + 2)ĵ + (−t²/2 + 3)k̂"],a:3,e:"Integrate: r⃗ = (−t²/2 + C₁)î + (−t²/2 + C₂)ĵ + (−t²/2 + C₃)k̂. At t = 0 the constants are 1, 2, 3."},
+{s:"Choose the correct answer",q:"The binormal vector B is defined by:",o:["B = T × N","B = T − N","B = T · N","B = N × T"],a:0,e:"B = T × N (a vector, perpendicular to the plane of T and N)."},
+// ---- Q3 as MCQ
+{s:"Q3-A: r⃗(t) = sin t î + cos t ĵ + 4k̂",q:"T(t) = ?",o:["⟨cos t, −sin t, 0⟩","⟨−cos t, sin t, 0⟩","⟨sin t, cos t, 4⟩","⟨cos t, sin t, 0⟩"],a:0,e:"r⃗′ = ⟨cos t, −sin t, 0⟩ and |r⃗′| = 1, so T = r⃗′."},
+{s:"Q3-A: r⃗(t) = sin t î + cos t ĵ + 4k̂",q:"N(t) = ?",o:["⟨sin t, cos t, 0⟩","⟨−sin t, −cos t, 0⟩","⟨−sin t, cos t, 0⟩","⟨cos t, −sin t, 0⟩"],a:1,e:"T′ = ⟨−sin t, −cos t, 0⟩, |T′| = 1, so N = T′/|T′| = ⟨−sin t, −cos t, 0⟩."},
+{s:"Q3-A: r⃗(t) = sin t î + cos t ĵ + 4k̂",q:"B(t) = T × N = ?",o:["⟨0, 0, 1⟩","⟨0, 0, −1⟩","⟨0, 1, 0⟩","⟨1, 0, 0⟩"],a:1,e:"The k̂ component of T × N = (cos t)(−cos t) − (−sin t)(−sin t) = −cos²t − sin²t = −1. So B = ⟨0, 0, −1⟩."},
+{s:"Q3-A: r⃗(t) = sin t î + cos t ĵ + 4k̂",q:"The values of T and N at t = π/4 are:",o:["T = ⟨√2/2, −√2/2, 0⟩, N = ⟨−√2/2, −√2/2, 0⟩","T = ⟨√2/2, √2/2, 0⟩, N = ⟨−√2/2, √2/2, 0⟩","T = ⟨−√2/2, √2/2, 0⟩, N = ⟨√2/2, √2/2, 0⟩","T = ⟨√2/2, −√2/2, 0⟩, N = ⟨√2/2, √2/2, 0⟩"],a:0,e:"At t = π/4, sin t = cos t = √2/2. Substitute into T = ⟨cos t, −sin t, 0⟩ and N = ⟨−sin t, −cos t, 0⟩. B stays ⟨0, 0, −1⟩."},
+{s:"Q3-B",q:"The distance from S(1, 1, 5) to the line L: x = 1 + t, y = 3 − t, z = 2t is:",o:["√5","√30","√6","5"],a:0,e:"P(1, 3, 0) is on L and v = ⟨1, −1, 2⟩. PS⃗ = ⟨0, −2, 5⟩. PS⃗ × v = ⟨1, 5, 2⟩ → |PS⃗ × v| = √30, |v| = √6. d = √30/√6 = √5."}
+];
+let i=0,score=0,wrong=[],done=false;
+const $=id=>document.getElementById(id);
+function show(){
+  const q=Q[i];
+  $("bar").style.width=(i/Q.length*100)+"%";
+  $("pos").textContent="Question "+(i+1)+" of "+Q.length;
+  $("sc").textContent="Score: "+score;
+  let h='<div class="sec">'+q.s+'</div><p class="q">'+q.q+'</p>';
+  q.o.forEach((t,k)=>{h+='<button class="opt" data-k="'+k+'"><b>'+"ABCD"[k]+')</b>'+t+'</button>'});
+  h+='<div class="exp" id="exp"></div><button class="btn" id="next">'+(i==Q.length-1?"See result":"Next question")+'</button>';
+  $("card").innerHTML=h;
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(+b.dataset.k));
+  $("next").onclick=()=>{i++;i<Q.length?show():finish()};
+}
+function pick(k){
+  const q=Q[i],ok=k===q.a;
+  document.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;if(j===q.a)b.classList.add("ok");else if(j===k)b.classList.add("no")});
+  if(ok)score++;else wrong.push(i);
+  const e=$("exp");e.innerHTML=(ok?"✅ Correct. ":"❌ Wrong. ")+q.e;e.classList.add("show");
+  $("sc").textContent="Score: "+score;
+  $("next").classList.add("show");
+}
+function finish(){
+  $("bar").style.width="100%";
+  $("pos").textContent="Finished";
+  const p=Math.round(score/Q.length*100);
+  const m=p>=85?"ممتاز! جاهز للكويز 👏":p>=60?"كويس، راجع الأسئلة الغلط تحت":"محتاج مراجعة أكتر — ارجع للدروس وحاول تاني";
+  let h='<div class="score">'+score+' / '+Q.length+'</div><div class="msg">'+p+'% — '+m+'</div>';
+  if(wrong.length){h+='<div class="sec">Review your mistakes</div>';
+    wrong.forEach(n=>{const q=Q[n];h+='<div class="rev"><small>Q'+(n+1)+'</small> '+q.q+'<br><b>'+"ABCD"[q.a]+')</b> '+q.o[q.a]+'<br><small>'+q.e+'</small></div>'});}
+  h+='<button class="btn show" id="again">Try again</button>';
+  $("card").innerHTML=h;
+  $("again").onclick=()=>{i=0;score=0;wrong=[];show()};
+}
+show();
+</script>
+</body>
+</html>
