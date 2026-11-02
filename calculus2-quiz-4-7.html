@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>كويز 1 · تفاضل وتكامل 2 · ELMOGY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#f3f6fa; --card:#ffffff; --ink:#1e293b; --muted:#64748b; --line:#dbe3ec;
+  --slate:#334155; --blue:#1d8fd1; --blue-soft:#e6f3fb; --orange:#ee6a2f; --orange-soft:#fff1ea;
+  --ok:#16a34a; --ok-soft:#e5f6ec; --bad:#dc2626; --bad-soft:#fdeaea; --pi:#c8281f;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f172a; --card:#1b2638; --ink:#e8eef6; --muted:#9aa9bd; --line:#2d3b52;
+    --slate:#0b1220; --blue:#46b0ea; --blue-soft:#14324a; --orange:#ff8650; --orange-soft:#3a2418;
+    --ok:#4ade80; --ok-soft:#12331f; --bad:#f87171; --bad-soft:#3b1717; --pi:#ef5a50;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f172a; --card:#1b2638; --ink:#e8eef6; --muted:#9aa9bd; --line:#2d3b52;
+  --slate:#0b1220; --blue:#46b0ea; --blue-soft:#14324a; --orange:#ff8650; --orange-soft:#3a2418;
+  --ok:#4ade80; --ok-soft:#12331f; --bad:#f87171; --bad-soft:#3b1717; --pi:#ef5a50;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;line-height:1.7;min-height:100vh}
+.wrap{max-width:680px;margin:0 auto;padding:16px 16px 40px}
+header.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 2px 14px;border-bottom:2px solid var(--slate);margin-bottom:18px}
+.logo{display:flex;align-items:center;gap:8px;direction:ltr;font-weight:800;letter-spacing:.18em;font-size:20px}
+.logo .pi{font-family:Georgia,'Times New Roman',serif;font-size:34px;color:var(--pi);line-height:1;font-style:italic;letter-spacing:0}
+.tag{font-size:12px;color:var(--muted);direction:ltr;text-align:left}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+h1{font-size:26px;margin:0 0 6px;line-height:1.3}
+p.lead{color:var(--muted);margin:0 0 18px}
+.facts{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 20px;padding:0;list-style:none}
+.facts li{background:var(--blue-soft);color:var(--blue);border-radius:999px;padding:3px 14px;font-size:14px;font-weight:600}
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+input[type=text]{width:100%;font:inherit;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+input[type=text]:focus{outline:3px solid var(--blue-soft);border-color:var(--blue)}
+button{font:inherit;cursor:pointer}
+.btn{display:inline-block;border:0;border-radius:10px;padding:11px 26px;font-weight:700;background:var(--orange);color:#fff;margin-top:16px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--slate);border:1.5px solid var(--line)}
+:root[data-theme="dark"] .btn.ghost{color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.ghost{color:var(--ink)}}
+.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.bar{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--blue);border-radius:99px;transition:width .3s}
+.count{font-weight:700;font-size:14px;color:var(--muted);white-space:nowrap}
+.qhead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.qnum{background:var(--blue);color:#fff;border-radius:10px;padding:2px 12px;font-weight:800}
+.qtype{background:var(--blue-soft);color:var(--blue);border-radius:999px;padding:1px 12px;font-size:13px;font-weight:600}
+.qtext{direction:ltr;text-align:left;font-weight:700;font-size:18px;margin:0 0 14px;line-height:1.6}
+.given{direction:ltr;background:var(--slate);color:#fff;border-radius:10px;padding:12px 16px;margin-bottom:14px;font-family:'Cambria Math','Times New Roman',serif;font-size:18px;text-align:center;overflow-x:auto}
+.given .mx{display:inline-block;vertical-align:middle;border-left:2px solid #fff;border-right:2px solid #fff;border-radius:6px;padding:2px 10px}
+.given .mx table{border-collapse:collapse}
+.given .mx td{padding:1px 10px;text-align:center}
+.given .sys{display:inline-block;text-align:left;border-left:2px solid #fff;padding-left:10px}
+.opts{display:grid;gap:10px}
+.opt{direction:ltr;text-align:left;display:flex;align-items:center;gap:12px;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--ink);font-size:16px}
+.opt .l{flex:none;width:28px;height:28px;border-radius:50%;background:var(--slate);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.opt .t{font-family:'Cambria Math','Times New Roman',serif;font-size:18px}
+.opt.sel{border-color:var(--blue);background:var(--blue-soft)}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.ok .l{background:var(--ok)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+.opt.bad .l{background:var(--bad)}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;border:1.5px solid}
+.fb.ok{border-color:var(--ok);background:var(--ok-soft)}
+.fb.bad{border-color:var(--bad);background:var(--bad-soft)}
+.fb h3{margin:0 0 6px;font-size:17px}
+.steps{direction:ltr;text-align:left;margin:8px 0 0;padding:0;list-style:none;font-family:'Cambria Math','Times New Roman',serif;font-size:17px}
+.steps li{padding:4px 0;border-top:1px dashed var(--line)}
+.steps li:first-child{border-top:0}
+.note{margin-top:10px;background:var(--orange-soft);border-right:4px solid var(--orange);border-radius:6px;padding:8px 12px;font-size:15px}
+.score{text-align:center;padding:10px 0 4px}
+.score .big{font-size:56px;font-weight:800;line-height:1.1;color:var(--orange)}
+.score .of{color:var(--muted);font-weight:600}
+.who{font-weight:700;font-size:18px}
+.review{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:8px}
+.review li{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:15px}
+.review .m{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px}
+.review .m.ok{background:var(--ok)}.review .m.bad{background:var(--bad)}
+.review .q{direction:ltr;text-align:left;flex:1}
+.review small{display:block;color:var(--muted)}
+.foot{margin-top:22px;text-align:center;color:var(--muted);font-size:14px}
+.foot b{direction:ltr;unicode-bidi:embed}
+.katex{font-size:1.1em}
+.given .katex-display{margin:.15em 0}
+.given .katex-display>.katex{text-align:center}
+.katex-display{overflow-x:auto;overflow-y:hidden}
+.hide{display:none}
+@media (prefers-reduced-motion: reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <div class="logo"><span class="pi">π</span><span>ELMOGY</span></div>
+    <div class="tag">CALCULUS 2 · QUIZ 1</div>
+  </header>
+
+  <main>
+    <section id="start" class="card">
+      <h1>كويز 1 · تفاضل وتكامل 2</h1>
+      <p class="lead">Section 4.7 · Antiderivatives. اختار الإجابة الصحيحة، وهتشوف الحل بعد كل سؤال.</p>
+      <ul class="facts"><li>10 أسئلة</li><li>اختيار من متعدد</li><li>الحل بعد كل سؤال</li></ul>
+      <label class="fld" for="name">اكتب اسمك</label>
+      <input id="name" type="text" autocomplete="name" placeholder="الاسم بالكامل">
+      <button id="go" class="btn" disabled>ابدأ الكويز</button>
+    </section>
+
+    <section id="quiz" class="hide">
+      <div class="progress"><div class="bar"><i id="barfill"></i></div><div class="count" id="count"></div></div>
+      <div class="card" id="qcard"></div>
+    </section>
+
+    <section id="result" class="card hide"></section>
+  </main>
+
+  <div class="foot">حلول واجبات · ملخصات · تست بنك<br><b>@AElmogy0</b> · <b>002 0109 1795 307</b></div>
+</div>
+
+<script>
+var Q = [
+{
+  tag:'تعريف الـ Antiderivative',
+  rv:'$F^{\\prime}(x)=f(x)$ on $I$',
+  text:'A function $F$ is an antiderivative of $f$ on an interval $I$ if $F^{\\prime}(x)=f(x)$ for all $x$ in $I$.',
+  given:'$$F^{\\prime}(x)=f(x),\\qquad x\\in I$$',
+  opts:['True','False'], ans:0,
+  steps:['Definition: $F$ is an antiderivative of $f$ $\\iff$ $F^{\\prime}=f$ on $I$','Example: $F(x)=x^{2}\\ \\Rightarrow\\ F^{\\prime}(x)=2x=f(x)$'],
+  note:'بنشتق $F$ عشان نوصل لـ $f$، مش العكس.'
+},
+{
+  tag:'قوى سالبة',
+  rv:'$\\int\\left(\\frac{1}{x^{2}}-x^{2}-\\frac{1}{3}\\right)dx$',
+  text:'Evaluate the integral below.',
+  given:'$$\\int\\left(\\frac{1}{x^{2}}-x^{2}-\\frac{1}{3}\\right)dx$$',
+  opts:['$\\displaystyle \\frac{1}{x^{2}}-x^{2}-\\frac{1}{3}+c$',
+        '$\\displaystyle -\\frac{1}{x}-x^{3}-\\frac{x}{3}+c$',
+        '$\\displaystyle -\\frac{1}{x}-\\frac{x^{3}}{3}-\\frac{x}{3}+c$',
+        '$\\displaystyle -x-\\frac{x^{3}}{3}-\\frac{x}{3}+c$'], ans:2,
+  steps:['Rewrite: $\\dfrac{1}{x^{2}}=x^{-2}$','$\\displaystyle\\int x^{-2}\\,dx=\\frac{x^{-1}}{-1}=-\\frac{1}{x}$','$\\displaystyle\\int x^{2}\\,dx=\\frac{x^{3}}{3},\\qquad \\int\\frac{1}{3}\\,dx=\\frac{x}{3}$','Result: $\\displaystyle -\\frac{1}{x}-\\frac{x^{3}}{3}-\\frac{x}{3}+c$'],
+  note:'مفيش قاعدة جاهزة لـ $\\frac{1}{x^{2}}$. اكتبها $x^{-2}$ الأول وبعدين طبّق قاعدة القوى.'
+},
+{
+  tag:'قاعدة القوى',
+  rv:'$\\int x^{n}dx=n\\,x^{n+1}+c$',
+  text:'The power rule for integrals states that:',
+  given:'$$\\int x^{n}\\,dx=n\\,x^{n+1}+c$$',
+  opts:['True','False'], ans:1,
+  steps:['Correct rule: $\\displaystyle\\int x^{n}\\,dx=\\frac{x^{n+1}}{n+1}+c,\\quad n\\neq-1$','Test $n=2$: $\\displaystyle\\int x^{2}\\,dx=\\frac{x^{3}}{3}$, not $2x^{3}$','Check: $\\dfrac{d}{dx}\\left[n\\,x^{n+1}\\right]=n(n+1)\\,x^{n}\\neq x^{n}$'],
+  note:'في التكامل بنزوّد الأس 1 وبنقسم على الأس الجديد، مش بنضرب فيه.'
+},
+{
+  tag:'جذور وأسس كسرية',
+  rv:'$\\int\\left(\\sqrt{x}+\\frac{1}{\\sqrt{x}}\\right)dx$',
+  text:'Evaluate the integral below.',
+  given:'$$\\int\\left(\\sqrt{x}+\\frac{1}{\\sqrt{x}}\\right)dx$$',
+  opts:['$\\displaystyle \\frac{2}{3}\\sqrt{x^{3}}+2\\sqrt{x}+c$',
+        '$\\displaystyle \\frac{2}{3}\\sqrt{x^{3}}+\\frac{1}{2}\\sqrt{x}+c$',
+        '$\\displaystyle \\frac{3}{2}\\sqrt{x^{3}}+\\sqrt{x}+c$',
+        '$x+2\\sqrt{x}+c$'], ans:0,
+  steps:['$\\sqrt{x}=x^{1/2},\\qquad \\dfrac{1}{\\sqrt{x}}=x^{-1/2}$','$\\displaystyle\\int x^{1/2}\\,dx=\\frac{2}{3}\\,x^{3/2}$','$\\displaystyle\\int x^{-1/2}\\,dx=2\\,x^{1/2}=2\\sqrt{x}$','Result: $\\displaystyle \\frac{2}{3}\\sqrt{x^{3}}+2\\sqrt{x}+c$'],
+  note:'القسمة على الأس الجديد معناها الضرب في مقلوبه: $\\frac{1}{3/2}=\\frac{2}{3}$ و $\\frac{1}{1/2}=2$.'
+},
+{
+  tag:'متغيرات ثابتة',
+  rv:'$\\int yz\\,dx$',
+  text:'Evaluate the integral below.',
+  given:'$$\\int yz\\,dx$$',
+  opts:['$0$','$x+c$','$yz+c$','$xyz+c$'], ans:3,
+  steps:['The variable of integration is $x$, so $y$ and $z$ are constants','$\\int k\\,dx=kx+c$ with $k=yz$','Result: $xyz+c$','Check: $\\dfrac{d}{dx}(xyz)=yz$'],
+  note:'الـ $dx$ بتحدد إن المتغير هو $x$، وأي حرف تاني بنعامله كثابت.'
+},
+{
+  tag:'تكامل دالة مركبة خطيًا',
+  rv:'$\\int\\sin(3x+2)\\,dx$',
+  text:'Evaluate the integral below.',
+  given:'$$\\int\\sin(3x+2)\\,dx$$',
+  opts:['$-3\\cos(3x+2)+c$','$\\displaystyle -\\frac{1}{3}\\cos(3x+2)+c$','$-\\sin(3x+2)+c$','$\\sin(3x+2)+c$'], ans:1,
+  steps:['Let $u=3x+2\\ \\Rightarrow\\ du=3\\,dx\\ \\Rightarrow\\ dx=\\dfrac{du}{3}$','$\\displaystyle\\int\\sin u\\cdot\\frac{du}{3}=-\\frac{1}{3}\\cos u+c$','Result: $\\displaystyle -\\frac{1}{3}\\cos(3x+2)+c$','Check: $\\dfrac{d}{dx}\\left[-\\dfrac{1}{3}\\cos(3x+2)\\right]=\\sin(3x+2)$'],
+  note:'معامل $x$ جوه الدالة بنقسم عليه مش بنضرب فيه. وإشارة السالب جاية من تكامل $\\sin$.'
+},
+{
+  tag:'تكامل حاصل الضرب',
+  rv:'$\\int f g\\,dx=\\int f\\,dx\\cdot\\int g\\,dx$',
+  text:'Is the following statement true or false?',
+  given:'$$\\int f(x)\\,g(x)\\,dx=\\int f(x)\\,dx\\cdot\\int g(x)\\,dx$$',
+  opts:['True','False'], ans:1,
+  steps:['Counterexample: $f(x)=g(x)=1$','Left side: $\\int 1\\cdot 1\\,dx=x+c$','Right side: $\\left(\\int 1\\,dx\\right)\\left(\\int 1\\,dx\\right)=x\\cdot x=x^{2}$','$x+c\\neq x^{2}\\ \\Rightarrow$ the statement is false'],
+  note:'التكامل بيتوزع على الجمع والطرح بس، مش على الضرب ولا القسمة.'
+},
+{
+  tag:'Sec · Tan',
+  rv:'$\\int\\sec 2\\theta\\,\\tan 2\\theta\\,d\\theta$',
+  text:'Evaluate the integral below.',
+  given:'$$\\int\\sec 2\\theta\\,\\tan 2\\theta\\,d\\theta$$',
+  opts:['$\\displaystyle \\frac{\\sec 2\\theta}{2}+c$','$-\\sec 2\\theta+c$','$\\sec^{2}2\\theta+c$','$\\sec 2\\theta+c$'], ans:0,
+  steps:['$\\dfrac{d}{d\\theta}(\\sec 2\\theta)=2\\sec 2\\theta\\tan 2\\theta$','So $\\sec 2\\theta\\tan 2\\theta=\\dfrac{1}{2}\\,\\dfrac{d}{d\\theta}(\\sec 2\\theta)$','$\\displaystyle\\int\\sec 2\\theta\\tan 2\\theta\\,d\\theta=\\frac{1}{2}\\sec 2\\theta+c$'],
+  note:'جرّب تشتق الاختيار (d) وهتلاقي الناتج $2\\sec 2\\theta\\tan 2\\theta$، يعني زاد معامل 2.'
+},
+{
+  tag:'دوال زائدية',
+  rv:'$\\int(\\cos x+\\sin x-\\cosh x)\\,dx=\\sin x-\\cos x-\\sinh x+c$',
+  text:'Is the following equation true or false?',
+  given:'$$\\int(\\cos x+\\sin x-\\cosh x)\\,dx=(\\sin x-\\cos x-\\sinh x)+c$$',
+  opts:['True','False'], ans:0,
+  steps:['$\\int\\cos x\\,dx=\\sin x$','$\\int\\sin x\\,dx=-\\cos x$','$\\int\\cosh x\\,dx=\\sinh x$','Combine: $\\sin x-\\cos x-\\sinh x+c$ ✓'],
+  note:'عكس $\\sin$ و $\\cos$، تكامل $\\cosh$ هو $\\sinh$ من غير أي إشارة سالبة.'
+},
+{
+  tag:'شرط ابتدائي',
+  rv:'$f(x)=9x^{2}-4x+5,\\ F(-1)=0$',
+  text:'If $f(x)=9x^{2}-4x+5$ and $F(-1)=0$, find $F(x)$.',
+  given:'$$f(x)=9x^{2}-4x+5,\\qquad F(-1)=0$$',
+  opts:['$F(x)=3x^{3}-2x^{2}+5x+10$','$F(x)=9x^{3}-4x^{2}+5x+10$','$F(x)=x^{3}-2x^{2}+5x+10$','$F(x)=3x^{3}-2x^{2}+5x$'], ans:0,
+  steps:['$F(x)=\\displaystyle\\int f(x)\\,dx=3x^{3}-2x^{2}+5x+c$','$F(-1)=-3-2-5+c=-10+c=0$','$c=10$','$F(x)=3x^{3}-2x^{2}+5x+10$'],
+  note:'بنعوّض بالنقطة في $F$ بعد التكامل مش في $f$، وده اللي بيحدد الثابت $c$.'
+}
+];
+var L = ['a','b','c','d'];
+var st = {name:'', i:0, picked:[], done:false};
+
+function $(id){return document.getElementById(id)}
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});
+  }
+}
+function show(id){['start','quiz','result'].forEach(function(s){$(s).classList.toggle('hide', s!==id)}); window.scrollTo(0,0);}
+function stripTags(h){var d=document.createElement('div');d.innerHTML=h;return d.textContent}
+
+$('name').addEventListener('input', function(){ $('go').disabled = this.value.trim().length < 2; });
+$('name').addEventListener('keydown', function(e){ if(e.key==='Enter' && !$('go').disabled) $('go').click(); });
+$('go').addEventListener('click', function(){
+  st = {name:$('name').value.trim(), i:0, picked:[], done:false};
+  show('quiz'); render();
+});
+
+function render(){
+  var q = Q[st.i], n = Q.length;
+  $('count').textContent = (st.i+1) + ' / ' + n;
+  $('barfill').style.width = (st.i/n*100) + '%';
+  var h = '<div class="qhead"><span class="qnum">' + (st.i+1) + '</span><span class="qtype">' + q.tag + '</span></div>' +
+    '<p class="qtext">' + q.text + '</p><div class="given">' + q.given + '</div><div class="opts" role="radiogroup">';
+  q.opts.forEach(function(o,k){
+    h += '<button class="opt" data-k="'+k+'" role="radio" aria-checked="false"><span class="l">'+L[k]+'</span><span class="t">'+o+'</span></button>';
+  });
+  h += '</div><div id="fb"></div><div id="act"><button class="btn" id="confirm" disabled>تأكيد الإجابة</button></div>';
+  $('qcard').innerHTML = h; typeset($('qcard'));
+  st.sel = null; st.done = false;
+  Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      if(st.done) return;
+      st.sel = +b.dataset.k;
+      Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(x){
+        var on = (x===b); x.classList.toggle('sel', on); x.setAttribute('aria-checked', on);
+      });
+      $('confirm').disabled = false;
+    });
+  });
+  $('confirm').addEventListener('click', confirmAns);
+}
+
+function confirmAns(){
+  var q = Q[st.i]; if(st.sel===null) return;
+  st.done = true; st.picked[st.i] = st.sel;
+  var right = st.sel === q.ans;
+  Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(b){
+    var k = +b.dataset.k; b.disabled = true; b.classList.remove('sel');
+    if(k===q.ans) b.classList.add('ok'); else if(k===st.sel) b.classList.add('bad');
+  });
+  var fb = '<div class="fb ' + (right?'ok':'bad') + '"><h3>' + (right ? 'إجابة صحيحة ✓' : 'إجابة غلط. الصح هو (' + L[q.ans] + ')') + '</h3>' +
+    '<ul class="steps">' + q.steps.map(function(s){return '<li>'+s+'</li>'}).join('') + '</ul>' +
+    (q.note ? '<div class="note"><b>انتبه:</b> ' + q.note + '</div>' : '') + '</div>';
+  $('fb').innerHTML = fb; typeset($('fb'));
+  var last = st.i === Q.length-1;
+  $('act').innerHTML = '<button class="btn" id="next">' + (last ? 'شوف النتيجة' : 'السؤال اللي بعده') + '</button>';
+  $('next').addEventListener('click', function(){
+    if(last) finish(); else { st.i++; render(); window.scrollTo(0,0); }
+  });
+  $('next').focus();
+}
+
+function finish(){
+  var score = 0; Q.forEach(function(q,i){ if(st.picked[i]===q.ans) score++; });
+  var pct = Math.round(score/Q.length*100);
+  var msg = pct===100 ? 'ممتاز، كل الإجابات صح!' : pct>=70 ? 'شغل حلو، راجع الأسئلة اللي غلطت فيها.' : pct>=50 ? 'مستواك كويس بس محتاج مراجعة.' : 'راجع ورقة القواعد وحاول تاني.';
+  var h = '<div class="score"><div class="who"></div><div class="big">' + score + '<span class="of"> / ' + Q.length + '</span></div><div>' + pct + '% · ' + msg + '</div></div><ul class="review">';
+  Q.forEach(function(q,i){
+    var ok = st.picked[i]===q.ans;
+    h += '<li><span class="m ' + (ok?'ok':'bad') + '">' + (ok?'✓':'✗') + '</span><div class="q">' + (i+1) + '. ' + q.rv +
+      '<small>' + (ok ? 'إجابتك: (' + L[q.ans] + ') ' + q.opts[q.ans] : 'إجابتك: (' + L[st.picked[i]] + ') ' + q.opts[st.picked[i]] + ' · الصح: (' + L[q.ans] + ') ' + q.opts[q.ans]) + '</small></div></li>';
+  });
+  h += '</ul><div style="text-align:center"><button class="btn ghost" id="again">حاول من الأول</button></div>';
+  $('result').innerHTML = h; typeset($('result'));
+  $('result').querySelector('.who').textContent = st.name;
+  $('barfill').style.width = '100%';
+  $('again').addEventListener('click', function(){ show('start'); });
+  show('result');
+}
+</script>
+</body>
+</html>
