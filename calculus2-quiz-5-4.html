@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>كويز 3 · تفاضل وتكامل 2 · ELMOGY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#f3f6fa; --card:#ffffff; --ink:#1e293b; --muted:#64748b; --line:#dbe3ec;
+  --slate:#334155; --blue:#1d8fd1; --blue-soft:#e6f3fb; --orange:#ee6a2f; --orange-soft:#fff1ea;
+  --ok:#16a34a; --ok-soft:#e5f6ec; --bad:#dc2626; --bad-soft:#fdeaea; --pi:#c8281f;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f172a; --card:#1b2638; --ink:#e8eef6; --muted:#9aa9bd; --line:#2d3b52;
+    --slate:#0b1220; --blue:#46b0ea; --blue-soft:#14324a; --orange:#ff8650; --orange-soft:#3a2418;
+    --ok:#4ade80; --ok-soft:#12331f; --bad:#f87171; --bad-soft:#3b1717; --pi:#ef5a50;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f172a; --card:#1b2638; --ink:#e8eef6; --muted:#9aa9bd; --line:#2d3b52;
+  --slate:#0b1220; --blue:#46b0ea; --blue-soft:#14324a; --orange:#ff8650; --orange-soft:#3a2418;
+  --ok:#4ade80; --ok-soft:#12331f; --bad:#f87171; --bad-soft:#3b1717; --pi:#ef5a50;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;line-height:1.7;min-height:100vh}
+.wrap{max-width:680px;margin:0 auto;padding:16px 16px 40px}
+header.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 2px 14px;border-bottom:2px solid var(--slate);margin-bottom:18px}
+.logo{display:flex;align-items:center;gap:8px;direction:ltr;font-weight:800;letter-spacing:.18em;font-size:20px}
+.logo .pi{font-family:Georgia,'Times New Roman',serif;font-size:34px;color:var(--pi);line-height:1;font-style:italic;letter-spacing:0}
+.tag{font-size:12px;color:var(--muted);direction:ltr;text-align:left}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+h1{font-size:26px;margin:0 0 6px;line-height:1.3}
+p.lead{color:var(--muted);margin:0 0 18px}
+.facts{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 20px;padding:0;list-style:none}
+.facts li{background:var(--blue-soft);color:var(--blue);border-radius:999px;padding:3px 14px;font-size:14px;font-weight:600}
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+input[type=text]{width:100%;font:inherit;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+input[type=text]:focus{outline:3px solid var(--blue-soft);border-color:var(--blue)}
+button{font:inherit;cursor:pointer}
+.btn{display:inline-block;border:0;border-radius:10px;padding:11px 26px;font-weight:700;background:var(--orange);color:#fff;margin-top:16px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--slate);border:1.5px solid var(--line)}
+:root[data-theme="dark"] .btn.ghost{color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.ghost{color:var(--ink)}}
+.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.bar{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--blue);border-radius:99px;transition:width .3s}
+.count{font-weight:700;font-size:14px;color:var(--muted);white-space:nowrap}
+.qhead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.qnum{background:var(--blue);color:#fff;border-radius:10px;padding:2px 12px;font-weight:800}
+.qtype{background:var(--blue-soft);color:var(--blue);border-radius:999px;padding:1px 12px;font-size:13px;font-weight:600}
+.qtext{direction:ltr;text-align:left;font-weight:700;font-size:18px;margin:0 0 14px;line-height:1.6}
+.given{direction:ltr;background:var(--slate);color:#fff;border-radius:10px;padding:12px 16px;margin-bottom:14px;font-family:'Cambria Math','Times New Roman',serif;font-size:18px;text-align:center;overflow-x:auto}
+.given .mx{display:inline-block;vertical-align:middle;border-left:2px solid #fff;border-right:2px solid #fff;border-radius:6px;padding:2px 10px}
+.given .mx table{border-collapse:collapse}
+.given .mx td{padding:1px 10px;text-align:center}
+.given .sys{display:inline-block;text-align:left;border-left:2px solid #fff;padding-left:10px}
+.opts{display:grid;gap:10px}
+.opt{direction:ltr;text-align:left;display:flex;align-items:center;gap:12px;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--ink);font-size:16px}
+.opt .l{flex:none;width:28px;height:28px;border-radius:50%;background:var(--slate);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.opt .t{font-family:'Cambria Math','Times New Roman',serif;font-size:18px}
+.opt.sel{border-color:var(--blue);background:var(--blue-soft)}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.ok .l{background:var(--ok)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+.opt.bad .l{background:var(--bad)}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;border:1.5px solid}
+.fb.ok{border-color:var(--ok);background:var(--ok-soft)}
+.fb.bad{border-color:var(--bad);background:var(--bad-soft)}
+.fb h3{margin:0 0 6px;font-size:17px}
+.steps{direction:ltr;text-align:left;margin:8px 0 0;padding:0;list-style:none;font-family:'Cambria Math','Times New Roman',serif;font-size:17px}
+.steps li{padding:4px 0;border-top:1px dashed var(--line)}
+.steps li:first-child{border-top:0}
+.note{margin-top:10px;background:var(--orange-soft);border-right:4px solid var(--orange);border-radius:6px;padding:8px 12px;font-size:15px}
+.score{text-align:center;padding:10px 0 4px}
+.score .big{font-size:56px;font-weight:800;line-height:1.1;color:var(--orange)}
+.score .of{color:var(--muted);font-weight:600}
+.who{font-weight:700;font-size:18px}
+.review{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:8px}
+.review li{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:15px}
+.review .m{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px}
+.review .m.ok{background:var(--ok)}.review .m.bad{background:var(--bad)}
+.review .q{direction:ltr;text-align:left;flex:1}
+.review small{display:block;color:var(--muted)}
+.foot{margin-top:22px;text-align:center;color:var(--muted);font-size:14px}
+.foot b{direction:ltr;unicode-bidi:embed}
+.katex{font-size:1.1em}
+.given .katex-display{margin:.15em 0}
+.given .katex-display>.katex{text-align:center}
+.katex-display{overflow-x:auto;overflow-y:hidden}
+.hide{display:none}
+@media (prefers-reduced-motion: reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <div class="logo"><span class="pi">π</span><span>ELMOGY</span></div>
+    <div class="tag">CALCULUS 2 · QUIZ 3</div>
+  </header>
+
+  <main>
+    <section id="start" class="card">
+      <h1>كويز 3 · تفاضل وتكامل 2</h1>
+      <p class="lead">Section 5.4 · The Fundamental Theorem of Calculus. اختار الإجابة الصحيحة، وهتشوف الحل بعد كل سؤال.</p>
+      <ul class="facts"><li>10 أسئلة</li><li>اختيار من متعدد</li><li>الحل بعد كل سؤال</li></ul>
+      <label class="fld" for="name">اكتب اسمك</label>
+      <input id="name" type="text" autocomplete="name" placeholder="الاسم بالكامل">
+      <button id="go" class="btn" disabled>ابدأ الكويز</button>
+    </section>
+
+    <section id="quiz" class="hide">
+      <div class="progress"><div class="bar"><i id="barfill"></i></div><div class="count" id="count"></div></div>
+      <div class="card" id="qcard"></div>
+    </section>
+
+    <section id="result" class="card hide"></section>
+  </main>
+
+  <div class="foot">حلول واجبات · ملخصات · تست بنك<br><b>@AElmogy0</b> · <b>002 0109 1795 307</b></div>
+</div>
+
+<script>
+var Q = [
+{
+  tag:'قاعدة النظرية الأساسية',
+  rv:'$\\frac{d}{dx}\\int_{a}^{x}f(t)\\,dt=f(x)-f(a)$',
+  text:'Let $f$ be continuous on $[a,b]$. Is the following statement true or false?',
+  given:'$$\\frac{d}{dx}\\int_{a}^{x}f(t)\\,dt=f(x)-f(a)$$',
+  opts:['True','False'], ans:1,
+  steps:['Fundamental Theorem, Part 1: $\\dfrac{d}{dx}\\displaystyle\\int_{a}^{x}f(t)\\,dt=f(x)$','Reason: $\\displaystyle\\int_{a}^{x}f(t)\\,dt=F(x)-F(a)$, and $F(a)$ is a constant','Test: $f(t)=2t,\\ a=1$: $\\ \\displaystyle\\int_{1}^{x}2t\\,dt=x^{2}-1\\ \\Rightarrow\\ \\dfrac{d}{dx}=2x=f(x)$, not $2x-2$'],
+  note:'الحد السفلي ثابت، فبيختفي في المشتقة. مفيش حاجة اسمها $f(a)$ في الناتج.'
+},
+{
+  tag:'قاعدة السلسلة',
+  rv:'$y=\\int_{1}^{\\sin x}3t^{2}\\,dt$',
+  text:'If $y=\\displaystyle\\int_{1}^{\\sin x}3t^{2}\\,dt$, then $\\dfrac{dy}{dx}=$',
+  given:'$$y=\\int_{1}^{\\sin x}3t^{2}\\,dt$$',
+  opts:['$3\\cos x\\,\\sin^{2}x$','$3\\sin^{2}x$','$3\\sin x$','$3\\sin x\\,\\cos^{2}x$'], ans:0,
+  steps:['Chain rule: $\\dfrac{dy}{dx}=f(u)\\cdot u^{\\prime}$ with $f(t)=3t^{2}$ and $u=\\sin x$','$f(u)=3\\sin^{2}x$, &nbsp; $u^{\\prime}=\\cos x$','$\\dfrac{dy}{dx}=3\\sin^{2}x\\cos x$','Check: $y=\\sin^{3}x-1\\ \\Rightarrow\\ y^{\\prime}=3\\sin^{2}x\\cos x$ ✓'],
+  note:'لازم تضرب في مشتقة الحد العلوي. نسيانها هو سبب اختيار (b).'
+},
+{
+  tag:'عكس النهايات وجذر',
+  rv:'$y=\\int_{\\sqrt{x}}^{0}\\sin t^{2}\\,dt$',
+  text:'If $y=\\displaystyle\\int_{\\sqrt{x}}^{0}\\sin t^{2}\\,dt$, then $\\dfrac{dy}{dx}=$',
+  given:'$$y=\\int_{\\sqrt{x}}^{0}\\sin t^{2}\\,dt$$',
+  opts:['$\\sin x^{2}$','$\\sin\\sqrt{x}$','$\\displaystyle-\\frac{\\sin x}{2\\sqrt{x}}$','$\\displaystyle\\frac{\\sin x}{2\\sqrt{x}}$'], ans:2,
+  steps:['Reverse the limits: $y=-\\displaystyle\\int_{0}^{\\sqrt{x}}\\sin t^{2}\\,dt$','Chain rule: $\\dfrac{dy}{dx}=-\\sin\\left(\\sqrt{x}\\right)^{2}\\cdot\\dfrac{d}{dx}\\sqrt{x}$','$\\left(\\sqrt{x}\\right)^{2}=x$ and $\\dfrac{d}{dx}\\sqrt{x}=\\dfrac{1}{2\\sqrt{x}}$','$\\dfrac{dy}{dx}=-\\dfrac{\\sin x}{2\\sqrt{x}}$'],
+  note:'الإشارة السالبة جاية من إن المتغير في الحد السفلي، والـ $\\sin x$ جاية من تبسيط $\\left(\\sqrt{x}\\right)^{2}=x$.'
+},
+{
+  tag:'حدّين متغيرين',
+  rv:'$y=\\int_{x}^{x^{2}}\\cos t\\,dt$',
+  text:'If $y=\\displaystyle\\int_{x}^{x^{2}}\\cos t\\,dt$, then $\\dfrac{dy}{dx}=$',
+  given:'$$y=\\int_{x}^{x^{2}}\\cos t\\,dt$$',
+  opts:['$\\cos x^{2}-\\cos x$','$2x\\cos x^{2}-\\cos x$','$2x\\cos x^{2}+\\cos x$','$2x\\cos x-\\cos x^{2}$'], ans:1,
+  steps:['Split at a constant: $y=\\displaystyle\\int_{0}^{x^{2}}\\cos t\\,dt-\\int_{0}^{x}\\cos t\\,dt$','First term (chain): $\\cos\\left(x^{2}\\right)\\cdot 2x$','Second term: $-\\cos x$','$\\dfrac{dy}{dx}=2x\\cos x^{2}-\\cos x$','Check: $y=\\sin x^{2}-\\sin x\\ \\Rightarrow\\ y^{\\prime}=2x\\cos x^{2}-\\cos x$ ✓'],
+  note:'القاعدة: (الدالة عند الحد العلوي × مشتقة الحد العلوي) ناقص (الدالة عند الحد السفلي × مشتقة الحد السفلي).'
+},
+{
+  tag:'حدود ثابتة',
+  rv:'$\\frac{d}{dx}\\int_{2}^{5}e^{t^{2}}\\,dt$',
+  text:'Find the derivative below.',
+  given:'$$\\frac{d}{dx}\\int_{2}^{5}e^{t^{2}}\\,dt$$',
+  opts:['$e^{x^{2}}$','$0$','$e^{5}-e^{2}$','$2x\\,e^{x^{2}}$'], ans:1,
+  steps:['Both limits are constants and $x$ does not appear in the integrand','So $\\displaystyle\\int_{2}^{5}e^{t^{2}}\\,dt$ is just a number','The derivative of a constant is $0$'],
+  note:'مش محتاج تحسب التكامل. الـ $x$ مش موجودة في أي حتة، فالناتج رقم ثابت ومشتقته صفر.'
+},
+{
+  tag:'متغير التكامل',
+  rv:'$\\frac{d}{dt}\\int_{0}^{t}\\sqrt{2+\\cos x}\\,dx$',
+  text:'Use the Fundamental Theorem (Part 1) to find:',
+  given:'$$\\frac{d}{dt}\\int_{0}^{t}\\sqrt{2+\\cos x}\\,dx$$',
+  opts:['$\\sqrt{2+\\cos x}$','$2+\\cos t$','$0$','$\\sqrt{2+\\cos t}$'], ans:3,
+  steps:['Here $x$ is only the dummy variable of integration, and the upper limit is $t$','Part 1: $\\dfrac{d}{dt}\\displaystyle\\int_{0}^{t}g(x)\\,dx=g(t)$','$g(x)=\\sqrt{2+\\cos x}\\ \\Rightarrow\\ g(t)=\\sqrt{2+\\cos t}$'],
+  note:'متغير التكامل بيختفي بعد التكامل، فالإجابة لازم تكون بمتغير الحد العلوي $t$ مش $x$.'
+},
+{
+  tag:'إيجاد الدالة من التكامل',
+  rv:'$\\int_{0}^{x}f(t)\\,dt=x^{3}+2x\\ \\Rightarrow\\ f(2)$',
+  text:'Suppose $f$ is continuous and, for all $x$,',
+  given:'$$\\int_{0}^{x}f(t)\\,dt=x^{3}+2x\\qquad\\Rightarrow\\qquad f(2)=\\ ?$$',
+  opts:['$12$','$14$','$8$','$6$'], ans:1,
+  steps:['Differentiate both sides with respect to $x$ (Part 1)','$f(x)=3x^{2}+2$','$f(2)=3(4)+2=14$'],
+  note:'الاختيار 12 هو قيمة التكامل نفسه عند $x=2$ وهي $8+4$، مش قيمة الدالة $f(2)$.'
+},
+{
+  tag:'قيمة تكامل مثلثي',
+  rv:'$\\int_{0}^{\\pi/8}\\sin 2x\\,dx$',
+  text:'Evaluate the definite integral below.',
+  given:'$$\\int_{0}^{\\pi/8}\\sin 2x\\,dx$$',
+  opts:['$\\displaystyle\\frac{\\sqrt{2}}{4}+\\frac{1}{2}$','$\\displaystyle-\\frac{\\sqrt{2}}{4}+\\frac{1}{2}$','$0$','$1$'], ans:1,
+  steps:['$F(x)=-\\dfrac{\\cos 2x}{2}$','$F\\!\\left(\\dfrac{\\pi}{8}\\right)=-\\dfrac{\\cos(\\pi/4)}{2}=-\\dfrac{\\sqrt{2}}{4}$','$F(0)=-\\dfrac{\\cos 0}{2}=-\\dfrac{1}{2}$','$F\\!\\left(\\dfrac{\\pi}{8}\\right)-F(0)=-\\dfrac{\\sqrt{2}}{4}+\\dfrac{1}{2}$'],
+  note:'بالتعويض في $F(0)$ بتطلع $-\\frac{1}{2}$ وبالطرح بتتحول لـ $+\\frac{1}{2}$. وإشارة السالب في $\\frac{\\sqrt{2}}{4}$ جاية من تكامل $\\sin$.'
+},
+{
+  tag:'مربع ذو الحدّين',
+  rv:'$\\int_{-1}^{1}(r+1)^{2}\\,dr$',
+  text:'Evaluate the definite integral below.',
+  given:'$$\\int_{-1}^{1}(r+1)^{2}\\,dr$$',
+  opts:['$8$','$-1$','$\\displaystyle-\\frac{8}{3}$','$\\displaystyle\\frac{8}{3}$'], ans:3,
+  steps:['Expand: $(r+1)^{2}=r^{2}+2r+1$','$F(r)=\\dfrac{r^{3}}{3}+r^{2}+r$','$F(1)=\\dfrac{1}{3}+1+1=\\dfrac{7}{3}$, &nbsp; $F(-1)=-\\dfrac{1}{3}+1-1=-\\dfrac{1}{3}$','$F(1)-F(-1)=\\dfrac{7}{3}+\\dfrac{1}{3}=\\dfrac{8}{3}$','Check: with $u=r+1$: $\\ \\displaystyle\\int_{0}^{2}u^{2}\\,du=\\dfrac{8}{3}$ ✓'],
+  note:'لو طلعت 8 يبقى كملت $(r+1)^{3}$ من غير ما تقسم على 3.'
+},
+{
+  tag:'أسس كسرية',
+  rv:'$\\int_{0}^{1}\\left(x^{2}+\\sqrt{x}\\right)dx$',
+  text:'Evaluate the definite integral below.',
+  given:'$$\\int_{0}^{1}\\left(x^{2}+\\sqrt{x}\\right)dx$$',
+  opts:['$0$','$1$','$2$','$3$'], ans:1,
+  steps:['$\\sqrt{x}=x^{1/2}$','$F(x)=\\dfrac{x^{3}}{3}+\\dfrac{2}{3}x^{3/2}$','$F(1)=\\dfrac{1}{3}+\\dfrac{2}{3}=1$, &nbsp; $F(0)=0$','$F(1)-F(0)=1$'],
+  note:'تكامل $x^{1/2}$ هو $\\frac{2}{3}x^{3/2}$ وليس $\\frac{1}{2}x^{3/2}$، والقسمة على الأس الجديد $\\frac{3}{2}$ هي اللي بتدّي $\\frac{2}{3}$.'
+}
+];
+var L = ['a','b','c','d'];
+var st = {name:'', i:0, picked:[], done:false};
+
+function $(id){return document.getElementById(id)}
+function typeset(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});
+  }
+}
+function show(id){['start','quiz','result'].forEach(function(s){$(s).classList.toggle('hide', s!==id)}); window.scrollTo(0,0);}
+function stripTags(h){var d=document.createElement('div');d.innerHTML=h;return d.textContent}
+
+$('name').addEventListener('input', function(){ $('go').disabled = this.value.trim().length < 2; });
+$('name').addEventListener('keydown', function(e){ if(e.key==='Enter' && !$('go').disabled) $('go').click(); });
+$('go').addEventListener('click', function(){
+  st = {name:$('name').value.trim(), i:0, picked:[], done:false};
+  show('quiz'); render();
+});
+
+function render(){
+  var q = Q[st.i], n = Q.length;
+  $('count').textContent = (st.i+1) + ' / ' + n;
+  $('barfill').style.width = (st.i/n*100) + '%';
+  var h = '<div class="qhead"><span class="qnum">' + (st.i+1) + '</span><span class="qtype">' + q.tag + '</span></div>' +
+    '<p class="qtext">' + q.text + '</p><div class="given">' + q.given + '</div><div class="opts" role="radiogroup">';
+  q.opts.forEach(function(o,k){
+    h += '<button class="opt" data-k="'+k+'" role="radio" aria-checked="false"><span class="l">'+L[k]+'</span><span class="t">'+o+'</span></button>';
+  });
+  h += '</div><div id="fb"></div><div id="act"><button class="btn" id="confirm" disabled>تأكيد الإجابة</button></div>';
+  $('qcard').innerHTML = h; typeset($('qcard'));
+  st.sel = null; st.done = false;
+  Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      if(st.done) return;
+      st.sel = +b.dataset.k;
+      Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(x){
+        var on = (x===b); x.classList.toggle('sel', on); x.setAttribute('aria-checked', on);
+      });
+      $('confirm').disabled = false;
+    });
+  });
+  $('confirm').addEventListener('click', confirmAns);
+}
+
+function confirmAns(){
+  var q = Q[st.i]; if(st.sel===null) return;
+  st.done = true; st.picked[st.i] = st.sel;
+  var right = st.sel === q.ans;
+  Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(b){
+    var k = +b.dataset.k; b.disabled = true; b.classList.remove('sel');
+    if(k===q.ans) b.classList.add('ok'); else if(k===st.sel) b.classList.add('bad');
+  });
+  var fb = '<div class="fb ' + (right?'ok':'bad') + '"><h3>' + (right ? 'إجابة صحيحة ✓' : 'إجابة غلط. الصح هو (' + L[q.ans] + ')') + '</h3>' +
+    '<ul class="steps">' + q.steps.map(function(s){return '<li>'+s+'</li>'}).join('') + '</ul>' +
+    (q.note ? '<div class="note"><b>انتبه:</b> ' + q.note + '</div>' : '') + '</div>';
+  $('fb').innerHTML = fb; typeset($('fb'));
+  var last = st.i === Q.length-1;
+  $('act').innerHTML = '<button class="btn" id="next">' + (last ? 'شوف النتيجة' : 'السؤال اللي بعده') + '</button>';
+  $('next').addEventListener('click', function(){
+    if(last) finish(); else { st.i++; render(); window.scrollTo(0,0); }
+  });
+  $('next').focus();
+}
+
+function finish(){
+  var score = 0; Q.forEach(function(q,i){ if(st.picked[i]===q.ans) score++; });
+  var pct = Math.round(score/Q.length*100);
+  var msg = pct===100 ? 'ممتاز، كل الإجابات صح!' : pct>=70 ? 'شغل حلو، راجع الأسئلة اللي غلطت فيها.' : pct>=50 ? 'مستواك كويس بس محتاج مراجعة.' : 'راجع ورقة القواعد وحاول تاني.';
+  var h = '<div class="score"><div class="who"></div><div class="big">' + score + '<span class="of"> / ' + Q.length + '</span></div><div>' + pct + '% · ' + msg + '</div></div><ul class="review">';
+  Q.forEach(function(q,i){
+    var ok = st.picked[i]===q.ans;
+    h += '<li><span class="m ' + (ok?'ok':'bad') + '">' + (ok?'✓':'✗') + '</span><div class="q">' + (i+1) + '. ' + q.rv +
+      '<small>' + (ok ? 'إجابتك: (' + L[q.ans] + ') ' + q.opts[q.ans] : 'إجابتك: (' + L[st.picked[i]] + ') ' + q.opts[st.picked[i]] + ' · الصح: (' + L[q.ans] + ') ' + q.opts[q.ans]) + '</small></div></li>';
+  });
+  h += '</ul><div style="text-align:center"><button class="btn ghost" id="again">حاول من الأول</button></div>';
+  $('result').innerHTML = h; typeset($('result'));
+  $('result').querySelector('.who').textContent = st.name;
+  $('barfill').style.width = '100%';
+  $('again').addEventListener('click', function(){ show('start'); });
+  show('result');
+}
+</script>
+</body>
+</html>
