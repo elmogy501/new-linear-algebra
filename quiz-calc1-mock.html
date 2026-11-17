@@ -297,7 +297,7 @@ const Q = [
   "e": "طول القوس \\(s=r\\theta\\). نحوّل \\(45^{\\circ}=\\dfrac{\\pi}{4}\\) فـ \\(s=12\\cdot\\dfrac{\\pi}{4}=3\\pi\\) inches."
  },
  {
-  "q": "If \\(\\sin\\theta<0\\) and \\(\\cos\\theta<0\\), then the angle \\(\\theta\\) lies in the",
+  "q": "If \\(\\sin\\theta\\lt 0\\) and \\(\\cos\\theta\\lt 0\\), then the angle \\(\\theta\\) lies in the",
   "o": [
    "\\(\\text{first quadrant}\\)",
    "\\(\\text{second quadrant}\\)",
@@ -305,7 +305,7 @@ const Q = [
    "\\(\\text{fourth quadrant}\\)"
   ],
   "a": 2,
-  "e": "\\(\\sin<0\\) في الربعين الثالث والرابع، و\\(\\cos<0\\) في الربعين الثاني والثالث. المشترك هو الربع الثالث."
+  "e": "\\(\\sin\\lt 0\\) في الربعين الثالث والرابع، و\\(\\cos\\lt 0\\) في الربعين الثاني والثالث. المشترك هو الربع الثالث."
  },
  {
   "q": "\\(\\displaystyle \\displaystyle \\sin\\left(x+\\tfrac{\\pi}{2}\\right)=\\)",
@@ -349,7 +349,7 @@ const Q = [
    "\\(-1\\)"
   ],
   "a": 3,
-  "e": "لما \\(x\\to10^{-}\\) يبقى \\(x-10<0\\) فـ \\(|x-10|=-(x-10)\\). الكسر بيساوي \\(-1\\) والنهاية \\(-1\\)."
+  "e": "لما \\(x\\to10^{-}\\) يبقى \\(x-10\\lt 0\\) فـ \\(|x-10|=-(x-10)\\). الكسر بيساوي \\(-1\\) والنهاية \\(-1\\)."
  },
  {
   "q": "\\(\\displaystyle \\displaystyle \\lim_{x\\to-1}\\dfrac{x^{2}-x-2}{x+1}=\\)",
@@ -429,7 +429,7 @@ const Q = [
   "e": "الدالتين الخارجيتين بيقربوا من \\(\\sqrt7\\) لما \\(x\\to0\\)، فبنظرية الـ squeeze \\(\\lim f(x)=\\sqrt7\\)."
  },
  {
-  "q": "If \\(f(x)=\\begin{cases}x-1,&x\\le-1\\\\x^{2}+1,&-1<x\\le0\\\\(x+\\pi)^{2},&x>0\\end{cases}\\), then<br>\\(\\displaystyle \\lim_{x\\to0^{-}}f(x)=\\)",
+  "q": "If \\(f(x)=\\begin{cases}x-1,&x\\le-1\\\\x^{2}+1,&-1\\lt x\\le0\\\\(x+\\pi)^{2},&x\\gt 0\\end{cases}\\), then<br>\\(\\displaystyle \\lim_{x\\to0^{-}}f(x)=\\)",
   "o": [
    "\\(-2\\)",
    "\\(1\\)",
@@ -437,7 +437,7 @@ const Q = [
    "\\(\\pi^{2}\\)"
   ],
   "a": 1,
-  "e": "لما \\(x\\to0^{-}\\) بنستخدم الفرع \\(-1<x\\le0\\) وهو \\(x^{2}+1\\). يبقى النهاية \\(0+1=1\\)."
+  "e": "لما \\(x\\to0^{-}\\) بنستخدم الفرع \\(-1\\lt x\\le0\\) وهو \\(x^{2}+1\\). يبقى النهاية \\(0+1=1\\)."
  },
  {
   "q": "\\(\\displaystyle \\lim_{x\\to\\infty}2=2\\)",
@@ -471,7 +471,7 @@ const Q = [
   "e": "\\((x-2)^{2}\\) دايمًا موجبة وبتروح لـ \\(0^{+}\\)، فالكسر بيكبر من غير حد: النهاية \\(\\infty\\)."
  },
  {
-  "q": "The value of \\(m\\) that makes \\(f(x)=\\begin{cases}x-m,&x<3\\\\1-mx,&x\\ge3\\end{cases}\\) continuous at \\(x=3\\) is",
+  "q": "The value of \\(m\\) that makes \\(f(x)=\\begin{cases}x-m,&x\\lt 3\\\\1-mx,&x\\ge3\\end{cases}\\) continuous at \\(x=3\\) is",
   "o": [
    "\\(1\\)",
    "\\(-1\\)",
@@ -482,7 +482,7 @@ const Q = [
   "e": "شرط الاتصال عند \\(x=3\\): القيمتين من الجهتين متساويتين. \\(3-m=1-3m\\Rightarrow 2m=-2\\Rightarrow m=-1\\)."
  },
  {
-  "q": "The function \\(f(x)=\\begin{cases}x+2,&x<1\\\\6-x,&x\\ge1\\end{cases}\\) is",
+  "q": "The function \\(f(x)=\\begin{cases}x+2,&x\\lt 1\\\\6-x,&x\\ge1\\end{cases}\\) is",
   "o": [
    "\\(\\text{only left continuous at }x=1\\)",
    "\\(\\text{continuous at }x=1\\)",
@@ -758,7 +758,7 @@ const Q = [
   "e": "لو النهاية \\(\\pm\\infty\\) يبقى في مماس رأسي. أما لو النهاية D.N.E. (مش موجودة) يبقى مفيش مماس خالص (نقطة حادة)."
  },
  {
-  "q": "\\(\\displaystyle U(x)=\\begin{cases}0,&x<0\\\\1,&x\\ge0\\end{cases}\\) has a <b>vertical tangent line</b> at the point \\((0,1)\\)",
+  "q": "\\(\\displaystyle U(x)=\\begin{cases}0,&x\\lt 0\\\\1,&x\\ge0\\end{cases}\\) has a <b>vertical tangent line</b> at the point \\((0,1)\\)",
   "o": [
    "True",
    "False"
