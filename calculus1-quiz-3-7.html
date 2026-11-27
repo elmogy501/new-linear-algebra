@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no, date=no, email=no, address=no">
+<title>Quiz — Calculus 1 Lesson 3.7 | ELMOGY Mathematics</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0A2352;--navy2:#12306F;--blue:#2468D8;--orange:#F47B20;
+  --paper:#EEF3FA;--card:#FFFFFF;--ink:#101A33;--mute:#5F6E8C;--line:#D9E1F0;
+  --chip:#EDF0F6;--ok:#12975A;--okbg:#E5F6EE;--bad:#D6403F;--badbg:#FCEAEA;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Cairo',system-ui,sans-serif;line-height:1.65;font-size:16px}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+.top{background:var(--navy);color:#fff;border-bottom:4px solid var(--orange);
+  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:22px 22px}
+.top-in{max-width:680px;margin:0 auto;padding:12px 14px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;direction:ltr}
+.logo{justify-self:start;width:min(100%,142px);background:#FDFEFE;border-radius:10px;padding:3px 7px;line-height:0}
+.logo img{width:100%;height:auto;display:block}
+.logo .lg{display:flex;align-items:center;justify-content:center;gap:6px;line-height:1;padding:3px 0;color:var(--navy);font-weight:800}
+.logo .lg i{font-family:Georgia,'Times New Roman',serif;font-style:normal;font-size:30px;border:2px solid var(--navy);border-radius:6px;padding:0 6px 2px}
+.logo .lg b{font-size:19px;letter-spacing:1.5px}
+.course{text-align:center;font-weight:700;font-size:14px;line-height:1.3}
+.course small{display:block;font-weight:400;opacity:.75;font-size:12px}
+.ar{justify-self:end;background:var(--orange);color:#fff;border-radius:10px;padding:2px 12px;font-weight:800;font-size:14px;direction:rtl}
+
+.wrap{max-width:680px;margin:0 auto;padding:18px 14px 84px}
+
+.card{position:relative;background:var(--card);border-radius:18px;padding:22px 18px 20px;box-shadow:0 1px 0 var(--line),0 10px 24px -14px rgba(10,35,82,.35)}
+.card:before,.card:after{content:"";position:absolute;width:26px;height:26px;border:4px solid var(--orange);pointer-events:none}
+.card:before{top:-6px;left:-6px;border-right:0;border-bottom:0;border-radius:10px 0 0 0}
+.card:after{bottom:-6px;right:-6px;border-left:0;border-top:0;border-radius:0 0 10px 0}
+
+.cover{text-align:center}
+.cover h1{margin:6px 0 0;font-size:28px;font-weight:800;color:var(--navy);direction:ltr;line-height:1.25}
+.cover p{margin:4px 0 18px;color:var(--mute);font-weight:700;font-size:17px;line-height:1.5}.cover p small{font-weight:600;font-size:14px}
+.btn{background:var(--orange);color:#fff;border:0;border-radius:14px;padding:13px 34px;font-weight:800;font-size:18px;cursor:pointer;box-shadow:0 4px 0 #C25F10}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #C25F10}
+
+.segs{display:flex;gap:6px;margin-bottom:14px;direction:ltr}
+.seg{flex:1;height:8px;border-radius:99px;background:#D3DCEC;transition:background .25s}
+.seg.cur{background:var(--blue)}.seg.ok{background:var(--ok)}.seg.bad{background:var(--bad)}
+
+.qrow{display:flex;gap:12px;align-items:flex-start;direction:ltr;margin-bottom:16px}
+.pill{flex:none;background:var(--navy);color:#fff;font-weight:800;border-radius:10px;padding:1px 12px;font-size:15px;margin-top:2px}
+.stem{font-size:18px;font-weight:700;line-height:1.7;text-align:left;min-width:0;flex:1}
+.gwrap{margin-top:10px}
+.gwrap svg.graph{display:block;margin:0 auto;width:100%;max-width:300px;background:#fff;border:2px solid var(--line);border-radius:12px}
+.opts{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;direction:ltr}
+.opts.one{grid-template-columns:minmax(0,1fr)}
+.opt .t{min-width:0;overflow-x:auto;overflow-y:hidden}
+.opt .t .katex-html{white-space:nowrap}
+.opts.one .opt .t .katex-html{white-space:normal}
+.opt{display:flex;align-items:center;gap:10px;min-height:56px;text-align:left;background:var(--chip);border:2px solid transparent;border-radius:12px;padding:8px 12px;font-size:17px;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s}
+.opt .l{flex:none;width:26px;height:26px;border-radius:8px;background:#fff;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--navy)}
+.opt:hover:not(:disabled){border-color:var(--blue)}
+.opt:disabled{cursor:default}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}.opt.ok .l{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.bad{background:var(--badbg);border-color:var(--bad)}.opt.bad .l{background:var(--bad);border-color:var(--bad);color:#fff}
+.opt.dim{opacity:.55}
+
+.exp{margin-top:16px;border-radius:12px;padding:12px 14px;font-size:15.5px;display:none}
+.exp.show{display:block}
+@media (prefers-reduced-motion:no-preference){.exp.show{animation:rise .25s ease-out}@keyframes rise{from{opacity:0;transform:translateY(6px)}}}
+.exp.ok{background:var(--okbg);border-right:5px solid var(--ok)}
+.exp.bad{background:var(--badbg);border-right:5px solid var(--bad)}
+.exp .t{display:block;font-weight:800;margin-bottom:2px}
+.next{display:none;margin:16px auto 0;min-width:200px}
+.next.show{display:block}
+
+.result{text-align:center}
+.ring{width:150px;height:150px;margin:0 auto 6px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .n{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:38px;color:var(--navy);line-height:1}
+.ring .n small{font-size:15px;color:var(--mute);margin-top:4px}
+.msg{font-size:19px;font-weight:800;margin:6px 0 16px}
+.rv{text-align:right;margin-top:20px}
+.rv h2{font-size:17px;margin:0 0 8px;color:var(--navy)}
+details{border-radius:12px;margin-bottom:8px;background:var(--chip);overflow:hidden}
+details.ok{border-right:5px solid var(--ok)}details.bad{border-right:5px solid var(--bad)}
+summary{cursor:pointer;padding:10px 12px;font-weight:700;list-style:none;display:flex;gap:10px;align-items:flex-start}
+summary::-webkit-details-marker{display:none}
+summary .s{flex:none;font-weight:800}
+summary .qq{direction:ltr;text-align:left;font-size:15px;font-weight:600;min-width:0}
+summary .qq .gwrap{display:none}
+.dbody{padding:0 12px 12px;font-size:15px}
+.dbody .ans{direction:ltr;text-align:left;font-weight:700;margin-bottom:6px}
+
+.foot{position:fixed;left:0;right:0;bottom:0;background:var(--navy);color:#fff;z-index:5;border-top:3px solid var(--orange)}
+.foot-in{max-width:680px;margin:0 auto;padding:7px 14px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;font-size:13px;direction:ltr}
+.foot-in .c{font-weight:800;background:rgba(255,255,255,.14);border-radius:99px;padding:0 14px}
+.foot-in .r{justify-self:end;color:#fff;-webkit-text-fill-color:#fff}
+.foot a,.foot-in a,a[x-apple-data-detectors]{color:#fff!important;-webkit-text-fill-color:#fff!important;text-decoration:none!important;font:inherit!important}
+.katex{font-size:1.06em;direction:ltr;unicode-bidi:isolate}
+@media (max-width:380px){.opt{font-size:15.5px;padding:8px}.stem{font-size:17px}}
+.bigno{font-size:84px;line-height:1;font-weight:800;color:var(--orange);margin:6px 0 2px;font-family:Cairo,sans-serif}
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in">
+  <div class="logo" id="logo"><div class="lg"><i>π</i><b>ELMOGY</b></div></div>
+  <div class="course">Calculus 1<small>Lesson 3.7</small></div>
+  <div class="ar">تفاضل وتكامل 1</div>
+</div></div>
+
+<main class="wrap"><div id="app"></div></main>
+
+<div class="foot"><div class="foot-in">
+  <span>ELMOGY Mathematics</span>
+  <span class="c" id="count">Quiz</span>
+  <span class="r">00201091795307</span>
+</div></div>
+
+<script>
+const LESSON='3.7', SUB='Implicit Differentiation';
+const Q = [{"q": "If \\(x^2-y^2=10\\), then \\(\\dfrac{dy}{dx}=\\)", "o": ["\\(-\\dfrac{x}{y}\\)", "\\(\\dfrac{y}{x}\\)", "\\(-\\dfrac{y}{x}\\)", "\\(\\dfrac{x}{y}\\)"], "a": 3, "e": "نشتق الطرفين بالنسبة لـ \\(x\\): \\(2x-2y\\dfrac{dy}{dx}=0\\). <br>\\(\\dfrac{dy}{dx}=\\dfrac{x}{y}\\)."}, {"q": "If \\(x^2+y^2=12\\), then \\(\\dfrac{dy}{dx}=\\)", "o": ["\\(-\\dfrac{y}{x}\\)", "\\(\\dfrac{y}{x}\\)", "\\(-\\dfrac{x}{y}\\)", "\\(\\dfrac{x}{y}\\)"], "a": 2, "e": "\\(2x+2y\\dfrac{dy}{dx}=0\\Rightarrow\\dfrac{dy}{dx}=-\\dfrac{x}{y}\\)."}, {"q": "If \\(xy+y^2=x^2\\), then \\(\\dfrac{dy}{dx}=\\)", "o": ["\\(\\dfrac{2x-y}{x+2y}\\)", "\\(\\dfrac{2x-y}{x-2y}\\)", "\\(\\dfrac{2x+y}{x-2y}\\)", "\\(\\dfrac{2x+y}{x+2y}\\)"], "a": 0, "e": "\\(y+x\\dfrac{dy}{dx}+2y\\dfrac{dy}{dx}=2x\\) (الحد \\(xy\\) بنشتقه Product Rule). <br>\\(\\dfrac{dy}{dx}(x+2y)=2x-y\\Rightarrow\\dfrac{dy}{dx}=\\dfrac{2x-y}{x+2y}\\)."}, {"q": "If \\(x^2y+xy^2=y\\), then \\(\\dfrac{dy}{dx}=\\)", "o": ["\\(-\\dfrac{2xy+y^2}{x^2-2xy-1}\\)", "\\(\\dfrac{2xy+y^2}{x^2+2xy-1}\\)", "\\(-\\dfrac{2xy+y^2}{x^2+2xy+1}\\)", "\\(-\\dfrac{2xy+y^2}{x^2+2xy-1}\\)"], "a": 3, "e": "\\(2xy+x^2y'+y^2+2xyy'=y'\\). <br>نجمّع \\(y'\\) في طرف: \\(y'\\left(x^2+2xy-1\\right)=-(2xy+y^2)\\) <br>\\(\\Rightarrow y'=-\\dfrac{2xy+y^2}{x^2+2xy-1}\\)."}, {"q": "If \\(y^2=x^2+\\sin(xy)\\), then \\(\\dfrac{dy}{dx}=\\)", "o": ["\\(\\dfrac{2y-x\\cos(xy)}{2x+y\\cos(xy)}\\)", "\\(\\dfrac{2x+y\\cos(xy)}{2y+x\\cos(xy)}\\)", "\\(\\dfrac{2x+y\\cos(xy)}{2y-x\\cos(xy)}\\)", "\\(\\dfrac{2x-y\\cos(xy)}{2y+x\\cos(xy)}\\)"], "a": 2, "e": "\\(2yy'=2x+\\cos(xy)\\cdot\\left(y+xy'\\right)\\). <br>\\(y'\\left(2y-x\\cos(xy)\\right)=2x+y\\cos(xy)\\) <br>\\(\\Rightarrow y'=\\dfrac{2x+y\\cos(xy)}{2y-x\\cos(xy)}\\)."}, {"q": "Find \\(\\dfrac{dy}{dx}\\) (use implicit differentiation): \\(x^2y+xy^2=\\sin x\\)", "o": ["\\(\\dfrac{\\cos x+2xy+y^2}{x^2+2xy}\\)", "\\(\\dfrac{\\cos x-2xy-y^2}{x^2+2xy}\\)", "\\(\\dfrac{2xy+y^2-\\cos x}{x^2+2xy}\\)", "\\(\\dfrac{\\cos x-2xy-y^2}{x^2-2xy}\\)"], "a": 1, "e": "\\(2xy+x^2y'+y^2+2xyy'=\\cos x\\). <br>\\(y'\\left(x^2+2xy\\right)=\\cos x-2xy-y^2\\) <br>\\(\\Rightarrow y'=\\dfrac{\\cos x-2xy-y^2}{x^2+2xy}\\)."}, {"q": "Find \\(\\dfrac{dy}{dx}\\) if \\(x^2-y^2-2xy^3=10\\)", "o": ["\\(\\dfrac{y^3-x}{y+3xy^2}\\)", "\\(\\dfrac{x-y^3}{y-3xy^2}\\)", "\\(\\dfrac{x+y^3}{y+3xy^2}\\)", "\\(\\dfrac{x-y^3}{y+3xy^2}\\)"], "a": 3, "e": "\\(2x-2yy'-2y^3-6xy^2y'=0\\). <br>\\(-y'\\left(2y+6xy^2\\right)=-2x+2y^3\\Rightarrow y'=\\dfrac{x-y^3}{y+3xy^2}\\)."}, {"q": "Find \\(\\dfrac{dy}{dx}\\) if \\(x+\\tan(xy)=0\\)", "o": ["\\(-\\dfrac{y+\\cos(xy)}{x}\\)", "\\(-\\dfrac{y+\\sin^2(xy)}{x}\\)", "\\(-\\dfrac{y+\\cos^2(xy)}{x}\\)", "\\(\\dfrac{y+\\cos^2(xy)}{x}\\)"], "a": 2, "e": "\\(1+\\sec^2(xy)\\cdot\\left(y+xy'\\right)=0\\). <br>\\(xy'\\sec^2(xy)=-1-y\\sec^2(xy)\\) نضرب الكل في \\(\\cos^2(xy)\\): <br>\\(xy'=-\\cos^2(xy)-y\\Rightarrow y'=-\\dfrac{y+\\cos^2(xy)}{x}\\)."}, {"q": "Find \\(\\dfrac{dy}{dx}\\) if \\(x^2y-xy^2=10\\)", "o": ["\\(\\dfrac{y^2+2xy}{x^2+2xy}\\)", "\\(\\dfrac{y^2-2xy}{x^2+2xy}\\)", "\\(\\dfrac{2xy-y^2}{x^2-2xy}\\)", "\\(\\dfrac{y^2-2xy}{x^2-2xy}\\)"], "a": 3, "e": "\\(2xy+x^2y'-y^2-2xyy'=0\\). <br>\\(y'\\left(x^2-2xy\\right)=y^2-2xy\\Rightarrow y'=\\dfrac{y^2-2xy}{x^2-2xy}\\)."}];
+
+const L = ['A','B','C','D'];
+const app = document.getElementById('app');
+const countEl = document.getElementById('count');
+let cur = 0, score = 0, answers = [];
+
+/* use the real logo image from the Midterm page when this page is hosted next to it */
+fetch('quiz-midterm-mock.html').then(r=>r.text()).then(t=>{
+  const m=t.match(/<div class="logo"><img[^>]*src="(data:image\/png;base64,[^"]+)"/);
+  if(m) document.getElementById('logo').innerHTML='<img alt="ELMOGY" src="'+m[1]+'">';
+}).catch(()=>{});
+
+function fit(){
+  const o=document.querySelector('.opts');
+  if(!o||o.classList.contains('one')) return;
+  if([...o.querySelectorAll('.t')].some(el=>el.scrollWidth>el.clientWidth+1)) o.classList.add('one');
+}
+function typeset(){
+  if(window.renderMathInElement){
+    renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});
+    fit();
+  } else { setTimeout(typeset,150); }
+}
+
+function cover(){
+  countEl.textContent='Quiz';
+  app.innerHTML=`<div class="card cover">
+    <div class="bigno" aria-hidden="true">${Q.length}</div>
+    <h1>Lesson ${LESSON} — Quiz</h1>
+    <p>${SUB}<br><small>${Q.length} أسئلة اختيار من متعدد</small></p>
+    <button class="btn" id="start">ابدأ الكويز</button>
+  </div>`;
+  document.getElementById('start').onclick=()=>{cur=0;score=0;answers=[];show();window.scrollTo({top:0});};
+  typeset();
+}
+
+function segs(){
+  return `<div class="segs" aria-hidden="true">${Q.map((_,i)=>`<div class="seg ${i<answers.length?(answers[i].ok?'ok':'bad'):(i===cur?'cur':'')}"></div>`).join('')}</div>`;
+}
+
+function show(){
+  const item=Q[cur];
+  countEl.textContent=(cur+1)+' / '+Q.length;
+  const plain=item.o.map(t=>t.replace(/\\[a-z]+|[\\(){}]/g,'')).reduce((m,t)=>Math.max(m,t.length),0);
+  app.innerHTML=`${segs()}
+    <div class="card">
+      <div class="qrow"><span class="pill">Q${cur+1}</span><div class="stem">${item.q}</div></div>
+      <div class="opts ${plain>24?'one':''}">${item.o.map((t,i)=>`<button class="opt" data-i="${i}"><span class="l">${L[i]}</span><span class="t">${t}</span></button>`).join('')}</div>
+      <div class="exp" id="exp" role="status"></div>
+      <button class="btn next" id="next">${cur===Q.length-1?'شوف النتيجة':'السؤال التالي'}</button>
+    </div>`;
+  app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.i));
+  document.getElementById('next').onclick=()=>{cur++;cur<Q.length?show():finish();window.scrollTo({top:0});};
+  typeset();
+}
+
+function pick(i){
+  const item=Q[cur], ok=i===item.a;
+  if(ok) score++;
+  answers.push({i,ok});
+  app.querySelectorAll('.opt').forEach((b,k)=>{
+    b.disabled=true;
+    if(k===item.a) b.classList.add('ok');
+    else if(k===i) b.classList.add('bad');
+    else b.classList.add('dim');
+  });
+  document.querySelectorAll('.seg')[cur].className='seg '+(ok?'ok':'bad');
+  const e=document.getElementById('exp');
+  e.className='exp show '+(ok?'ok':'bad');
+  e.innerHTML=`<span class="t">${ok?'إجابة صحيحة':'إجابة خاطئة، الصحيحة هي '+L[item.a]}</span>${item.e}`;
+  document.getElementById('next').classList.add('show');
+  typeset();
+  document.getElementById('next').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function finish(){
+  countEl.textContent='Quiz';
+  const pct=score/Q.length, R=62, C=2*Math.PI*R;
+  const col=pct>=.7?'var(--ok)':pct>=.5?'var(--orange)':'var(--bad)';
+  const msg=pct===1?'ممتاز، كل الإجابات صح':pct>=.7?'جيد جدًا، راجع الغلط':pct>=.5?'مستوى متوسط، راجع الدرس وجرّب تاني':'راجع الدرس وأعد الكويز';
+  app.innerHTML=`${segs()}
+    <div class="card result">
+      <div class="ring"><svg width="150" height="150" viewBox="0 0 150 150">
+        <circle cx="75" cy="75" r="${R}" fill="none" stroke="#DCE4F3" stroke-width="12"/>
+        <circle cx="75" cy="75" r="${R}" fill="none" stroke="${col}" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}"/></svg>
+        <div class="n">${score}<small>من ${Q.length}</small></div></div>
+      <div class="msg">${msg}</div>
+      <button class="btn" id="again">أعد الكويز</button>
+      <div class="rv"><h2>مراجعة الأسئلة</h2>
+        ${Q.map((it,k)=>`<details class="${answers[k].ok?'ok':'bad'}"${answers[k].ok?'':' open'}>
+          <summary><span class="s">${answers[k].ok?'✓':'✗'}</span><span class="qq">Q${k+1}. ${it.q}</span></summary>
+          <div class="dbody"><div class="ans">${L[it.a]}) ${it.o[it.a]}</div>${it.e}</div></details>`).join('')}
+      </div>
+    </div>`;
+  document.getElementById('again').onclick=()=>{cur=0;score=0;answers=[];show();window.scrollTo({top:0});};
+  typeset();
+}
+
+window.addEventListener('load',cover);
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(fit);}
+window.addEventListener('resize',fit);
+</script>
+</body>
+</html>
